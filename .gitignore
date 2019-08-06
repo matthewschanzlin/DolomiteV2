@@ -70,3 +70,17 @@
 app/app.iml
 DolomiteV2.iml
 local.properties
+.gradle/5.1.1/fileContent/fileContent.lock
+.gradle/5.1.1/fileHashes/resourceHashesCache.bin
+.gradle/5.1.1/javaCompile/classAnalysis.bin
+.gradle/5.1.1/javaCompile/jarAnalysis.bin
+.gradle/5.1.1/javaCompile/javaCompile.lock
+.gradle/5.1.1/javaCompile/taskHistory.bin
+.idea/libraries/Gradle____local_aars___C__Users_frank_OneDrive_Documents_GitHub_DolomiteV2_app_libs_threetenbp_1_4_0_jar_unspecified_jar.xml
+.idea/libraries/Gradle__androidx_annotation_annotation_1_1_0_jar.xml
+.idea/libraries/Gradle__androidx_arch_core_core_common_2_0_1_jar.xml
+.idea/libraries/Gradle__androidx_arch_core_core_runtime_2_0_1_aar.xml
+.idea/libraries/Gradle__androidx_room_room_common_2_1_0_jar.xml
+.idea/libraries/Gradle__androidx_room_room_runtime_2_1_0_aar.xml
+.idea/libraries/Gradle__androidx_sqlite_sqlite_2_0_1_aar.xml
+.idea/libraries/Gradle__androidx_sqlite_sqlite_framework_2_0_1_aar.xml

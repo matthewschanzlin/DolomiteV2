@@ -1,5 +1,5 @@
-package Entities;
-/*
+package entities;
+
 import androidx.room.TypeConverter;
 
 import org.threeten.bp.OffsetDateTime;
@@ -24,4 +24,3 @@ public class TiviTypeConverters {
         return offsetDateTime.format(dateTimeFormatter);
     }
 }
-*/

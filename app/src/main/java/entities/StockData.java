@@ -1,4 +1,4 @@
-package Entities;
+package entities;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
