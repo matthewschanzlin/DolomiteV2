@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PortfoliosActivity"
+    android:id="@+id/portfoliosActivity"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="right"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="13dp"
+        android:layout_marginRight="13dp"
+        android:layout_marginTop="13dp">
+        <Button
+            android:layout_centerVertical="true"
+            android:id="@+id/portfoliosEditButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:layout_alignParentLeft="true"
+            android:text="@string/edit_button"/>
+        <TextView
+            android:id="@+id/portfoliosActivityTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/portfolios_title"
+            android:fontFamily="sans-serif"
+            android:textSize="25dp"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
+
+    <GridView
+        android:id="@+id/portfoliosGridView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:numColumns="2">
+    </GridView>
+
+</LinearLayout>

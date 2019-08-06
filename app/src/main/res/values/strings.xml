@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">DolomiteV2</string>
+    <string name="portfolios_title">Portfolios</string>
+    <string name="edit_button">Edit</string>
+    <string name="portfolio_name">Portfolio 1</string>
+</resources>
