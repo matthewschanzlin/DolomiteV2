@@ -42,6 +42,16 @@
                 android:fontFamily="sans-serif"
                 android:text="@string/portfolios_title"
                 android:textSize="25dp" />
+
+            <Button
+                android:id="@+id/singlePortfolioSearchButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:text="Search" />
         </RelativeLayout>
 
         <LinearLayout
