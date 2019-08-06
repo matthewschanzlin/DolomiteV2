@@ -2,8 +2,11 @@ package com.example.dolomitev2;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.RelativeLayout;
@@ -26,6 +29,15 @@ public class PortfoliosActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_portfolios);
         initData();
+
+        portfoliosGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(PortfoliosActivity.this, PortfolioDetailActivity.class);
+                intent.putExtra("Portfolio name", portfolios.get(i).getName());
+                startActivity(intent);
+            }
+        });
     }
 
     void initData() {

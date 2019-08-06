@@ -1,9 +1,177 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PortfolioDetailActivity">
+    tools:context=".PortfolioDetailActivity"
+    android:orientation="vertical">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="right"
+            android:layout_marginLeft="13dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginRight="13dp"
+            android:layout_marginBottom="0dp"
+            android:layout_weight="0.075"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/singlePortfolioEditButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:text="@string/edit_button" />
+
+            <TextView
+                android:id="@+id/singlePortfolioTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:fontFamily="sans-serif"
+                android:text="@string/portfolios_title"
+                android:textSize="25dp" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/buttons"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.075"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/button1d"
+                android:text="1d"
+                android:minWidth="0dp"
+                android:layout_weight="0.125"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+            <Button
+                android:id="@+id/button5d"
+                android:text="5d"
+                android:minWidth="0dp"
+                android:layout_weight="0.125"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+            <Button
+                android:id="@+id/button1m"
+                android:text="1m"
+                android:minWidth="0dp"
+                android:layout_weight="0.125"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+            <Button
+                android:id="@+id/button3m"
+                android:text="3m"
+                android:minWidth="0dp"
+                android:layout_weight="0.125"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+            <Button
+                android:id="@+id/button6m"
+                android:text="6m"
+                android:minWidth="0dp"
+                android:layout_weight="0.125"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+            <Button
+                android:id="@+id/button1y"
+                android:text="1y"
+                android:minWidth="0dp"
+                android:layout_weight="0.125"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+            <Button
+                android:id="@+id/button5y"
+                android:text="5y"
+                android:minWidth="0dp"
+                android:layout_weight="0.125"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+            <Button
+                android:id="@+id/buttonAll"
+                android:text="All"
+                android:minWidth="0dp"
+                android:layout_weight="0.125"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/LineGraph"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.275"></RelativeLayout>
+
+        <GridLayout
+            android:id="@+id/Metadata"
+            android:layout_weight="0.075"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:columnCount="3"
+            android:rowCount="2">
+
+            <TextView
+                android:text="Open"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="0.33"/>
+            <TextView
+                android:text="Daily high"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="0.33"/>
+            <TextView
+                android:text="Daily low"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="0.33"/>
+
+            <TextView
+                android:text="52w high"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="0.33"/>
+            <TextView
+                android:text="52w low"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="0.33"/>
+            <TextView
+                android:text="Market cap: "
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="0.33"/>
+        </GridLayout>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5">
+
+        <ListView
+            android:id="@+id/singlePortfolioListView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </ListView>
+
+    </RelativeLayout>
+
+
+
+</LinearLayout>
