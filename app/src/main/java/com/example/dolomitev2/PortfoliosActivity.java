@@ -1,8 +1,13 @@
 package com.example.dolomitev2;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import androidx.room.Room;
 
+import androidx.fragment.app.Fragment;
+
+
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
@@ -10,6 +15,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
@@ -27,6 +33,7 @@ public class PortfoliosActivity extends AppCompatActivity {
     GridView portfoliosGrid;
     ArrayList<PortfolioCardAdapterItem> portfolios;
     CustomPortfolioCardAdapter adapter;
+    boolean inEditMode;
 
     AppDatabase db;
     AdminDAO dao;
@@ -37,10 +44,14 @@ public class PortfoliosActivity extends AppCompatActivity {
         setContentView(R.layout.activity_portfolios);
         initData();
 
+
         db = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "database-name").fallbackToDestructiveMigration().allowMainThreadQueries().build();
         // NOTE: MIGHT LOCK UP THREAD. SWITCH TO STATIC NESTED CLASS WHEN POSSIBLE
         dao = db.userDao();
+
+        inEditMode = false;
+
 
         portfoliosGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -48,6 +59,21 @@ public class PortfoliosActivity extends AppCompatActivity {
                 Intent intent = new Intent(PortfoliosActivity.this, PortfolioDetailActivity.class);
                 intent.putExtra("Portfolio name", portfolios.get(i).getName());
                 startActivity(intent);
+            }
+        });
+
+
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                inEditMode = !inEditMode;
+                if (inEditMode) {
+
+
+                }
+                else {
+
+                }
             }
         });
     }
@@ -71,8 +97,11 @@ public class PortfoliosActivity extends AppCompatActivity {
         points.add(new Point(40, 310));
         points.add(new Point(190, 400));
 
-        portfolios.add(new PortfolioCardAdapterItem(" ", "", "New Portfolio",
-                points));
+
+
+
+        portfolios.add(new PortfolioCardAdapterItem(" ", "", "New Portfolio", points
+        ));
         Portfolio[] portfolioObjects = dao.loadAllPortfolios();
         for(int i=0; i<portfolioObjects.length; i++) {
             portfolios.add(new PortfolioCardAdapterItem("-2.6%", "46000", portfolioObjects[i].portfolio_name, points));

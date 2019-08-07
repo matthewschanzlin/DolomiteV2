@@ -2,6 +2,9 @@ package utils;
 
 import android.graphics.Point;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -22,6 +25,7 @@ public class PortfolioCardAdapterItem extends AppCompatActivity {
         this.value = value;
         this.name = name;
         this.chart = chart;
+
     }
 
     public String getPercentChange() {
@@ -42,9 +46,11 @@ public class PortfolioCardAdapterItem extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("Am i hit", "yes");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_portfolio_card_adapter_item);
 
     }
+
 
 }

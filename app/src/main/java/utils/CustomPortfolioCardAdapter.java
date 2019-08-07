@@ -1,16 +1,14 @@
 package utils;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.Point;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.dolomitev2.PortfoliosActivity;
 import com.example.dolomitev2.R;
 
 import java.util.ArrayList;
@@ -20,7 +18,7 @@ public class CustomPortfolioCardAdapter extends BaseAdapter {
     Context context;
     ArrayList<PortfolioCardAdapterItem> portfolios;
 
-    public CustomPortfolioCardAdapter(Context context, ArrayList<PortfolioCardAdapterItem> portfolios) {
+    public CustomPortfolioCardAdapter(PortfoliosActivity context, ArrayList<PortfolioCardAdapterItem> portfolios) {
         this.context = context;
         this.portfolios = portfolios;
     }
@@ -31,9 +29,14 @@ public class CustomPortfolioCardAdapter extends BaseAdapter {
         return portfolios.size();
     }
 
+    public void revealCheckBox(int i) {
+
+
+    }
+
     @Override
-    public Object getItem(int i) {
-        return null;
+    public PortfolioCardAdapterItem getItem(int i) {
+        return portfolios.get(i);
     }
 
     @Override
@@ -54,6 +57,7 @@ public class CustomPortfolioCardAdapter extends BaseAdapter {
             viewHolder.value = view.findViewById(R.id.portfolioCardValue);
             viewHolder.name = view.findViewById(R.id.portfolioCardTitle);
             viewHolder.chart = view.findViewById(R.id.portfolioCardGraphContainer);
+            viewHolder.checkBoxContainer = view.findViewById(R.id.checkBoxContainer);
 
             view.setTag(viewHolder);
         }
@@ -66,7 +70,7 @@ public class CustomPortfolioCardAdapter extends BaseAdapter {
         viewHolder.value.setText(portfolios.get(i).getValue());
         DrawView chartView = new DrawView(context, portfolios.get(i).getChart());
         viewHolder.chart.addView(chartView);
-
+        viewHolder.checkBoxContainer.setVisibility(View.GONE);
         return view;
     }
 
@@ -75,5 +79,7 @@ public class CustomPortfolioCardAdapter extends BaseAdapter {
         TextView value;
         TextView name;
         RelativeLayout chart;
+        LinearLayout checkBoxContainer;
     }
+
 }

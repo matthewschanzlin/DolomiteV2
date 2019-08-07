@@ -7,6 +7,23 @@
     android:layout_height="match_parent"
     tools:context="utils.PortfolioCardAdapterItem">
 
+    <LinearLayout
+        android:id="@+id/checkBoxContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <CheckBox
+            android:id="@+id/deleteportfolioCheckbox"
+            android:layout_width="wrap_content"
+            android:layout_weight=".5"
+            android:layout_height="150dp"
+            android:layout_gravity="center_vertical"
+            />
+    </LinearLayout>
+
+
     <androidx.cardview.widget.CardView
         android:id="@+id/portfolioCardView"
         android:layout_width="0dp"
