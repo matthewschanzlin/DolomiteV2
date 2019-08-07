@@ -17,10 +17,12 @@ public class CustomPortfolioCardAdapter extends BaseAdapter {
 
     Context context;
     ArrayList<PortfolioCardAdapterItem> portfolios;
+    boolean editmode;
 
     public CustomPortfolioCardAdapter(PortfoliosActivity context, ArrayList<PortfolioCardAdapterItem> portfolios) {
         this.context = context;
         this.portfolios = portfolios;
+        this.editmode = false;
     }
 
 
@@ -29,9 +31,8 @@ public class CustomPortfolioCardAdapter extends BaseAdapter {
         return portfolios.size();
     }
 
-    public void revealCheckBox(int i) {
-
-
+    public void switchEditMode() {
+        editmode = ! editmode;
     }
 
     @Override
@@ -70,7 +71,12 @@ public class CustomPortfolioCardAdapter extends BaseAdapter {
         viewHolder.value.setText(portfolios.get(i).getValue());
         DrawView chartView = new DrawView(context, portfolios.get(i).getChart());
         viewHolder.chart.addView(chartView);
-        viewHolder.checkBoxContainer.setVisibility(View.GONE);
+        if (editmode) {
+            viewHolder.checkBoxContainer.setVisibility(View.VISIBLE);
+        }
+        else {
+            viewHolder.checkBoxContainer.setVisibility(View.GONE);
+        }
         return view;
     }
 

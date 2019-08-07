@@ -67,13 +67,8 @@ public class PortfoliosActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 inEditMode = !inEditMode;
-                if (inEditMode) {
-
-
-                }
-                else {
-
-                }
+                adapter.switchEditMode();
+                adapter.notifyDataSetChanged();
             }
         });
     }
