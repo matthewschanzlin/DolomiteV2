@@ -1,6 +1,7 @@
 package com.example.dolomitev2;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
 import android.content.Intent;
 import android.graphics.Point;
@@ -13,6 +14,9 @@ import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 
+import entities.AdminDAO;
+import entities.AppDatabase;
+import entities.Portfolio;
 import utils.CustomPortfolioCardAdapter;
 import utils.DrawView;
 import utils.PortfolioCardAdapterItem;
@@ -24,11 +28,19 @@ public class PortfoliosActivity extends AppCompatActivity {
     ArrayList<PortfolioCardAdapterItem> portfolios;
     CustomPortfolioCardAdapter adapter;
 
+    AppDatabase db;
+    AdminDAO dao;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_portfolios);
         initData();
+
+        db = Room.databaseBuilder(getApplicationContext(),
+                AppDatabase.class, "database-name").fallbackToDestructiveMigration().allowMainThreadQueries().build();
+        // NOTE: MIGHT LOCK UP THREAD. SWITCH TO STATIC NESTED CLASS WHEN POSSIBLE
+        dao = db.userDao();
 
         portfoliosGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -59,12 +71,11 @@ public class PortfoliosActivity extends AppCompatActivity {
         points.add(new Point(40, 310));
         points.add(new Point(190, 400));
 
-        portfolios.add(new PortfolioCardAdapterItem(" ", "", "New Portfolio", points
-                ));
-        portfolios.add(new PortfolioCardAdapterItem("-0.2%", "$10,235", "Stay Woke",
+        portfolios.add(new PortfolioCardAdapterItem(" ", "", "New Portfolio",
                 points));
-        portfolios.add(new PortfolioCardAdapterItem("-0.2%", "$10,235", "Stay Woke",
-                points));
-
+        Portfolio[] portfolioObjects = dao.loadAllPortfolios();
+        for(int i=0; i<portfolioObjects.length; i++) {
+            portfolios.add(new PortfolioCardAdapterItem("-2.6%", "46000", portfolioObjects[i].portfolio_name, points));
+        }
     }
 }
