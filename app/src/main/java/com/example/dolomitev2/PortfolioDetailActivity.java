@@ -1,10 +1,16 @@
 package com.example.dolomitev2;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.app.ActionBar;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -15,12 +21,16 @@ import utils.StockAdapterItem;
 
 public class PortfolioDetailActivity extends AppCompatActivity {
 
-    Button button1d, button5d, button1m, button3m, button6m, button1y, button5y, buttonAll, singlePortfolioEditButton;
+    Button button1d, button5d, button1m, button3m, button6m, button1y, button5y, buttonAll,
+            singlePortfolioEditButton, searchButton;
     String portfolioName;
     TextView singlePortfolioTitle;
     ListView stockList;
     ArrayList<StockAdapterItem> stocks;
     CustomStockAdapter customStockAdapter;
+    FrameLayout SearchContainer;
+    LinearLayout LinearSearchContainer;
+    boolean inSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +47,28 @@ public class PortfolioDetailActivity extends AppCompatActivity {
         buttonAll = findViewById(R.id.buttonAll);
         singlePortfolioEditButton = findViewById(R.id.singlePortfolioEditButton);
         singlePortfolioTitle = findViewById(R.id.singlePortfolioTitle);
+        SearchContainer = findViewById(R.id.SearchContainer);
+        LinearSearchContainer = findViewById(R.id.LinearSearchContainer);
+        searchButton = findViewById(R.id.singlePortfolioSearchButton);
+        inSearch = false;
+
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                LinearSearchContainer.setVisibility(View.VISIBLE);
+                inSearch = true;
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.setCustomAnimations(R.anim.slide_in_up, R.anim.slide_out_up);
+                fragmentTransaction.replace(R.id.SearchContainer, new SearchFragment());
+
+                fragmentTransaction.commit();
+            }
+        });
+
 
         portfolioName = getIntent().getStringExtra("Portfolio name");
         singlePortfolioTitle.setText(portfolioName);
@@ -44,6 +76,7 @@ public class PortfolioDetailActivity extends AppCompatActivity {
         singlePortfolioEditButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
 
             }
         });
@@ -62,5 +95,16 @@ public class PortfolioDetailActivity extends AppCompatActivity {
         stocks.add(new StockAdapterItem("SNAP", "Snapchat", "$28.53", "+5.4%"));
         stocks.add(new StockAdapterItem("WALL", "Walmart", "$99.01", "-0.8%"));
         stocks.add(new StockAdapterItem("REBK", "Rebok", "$42.69", "+1.5%"));
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (inSearch) {
+            inSearch = !inSearch;
+            LinearSearchContainer.setVisibility(View.GONE);
+
+        } else {
+            super.onBackPressed();
+        }
     }
 }
