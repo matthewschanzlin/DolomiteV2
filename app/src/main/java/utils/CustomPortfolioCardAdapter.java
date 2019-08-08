@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -58,7 +59,7 @@ public class CustomPortfolioCardAdapter extends BaseAdapter {
             viewHolder.value = view.findViewById(R.id.portfolioCardValue);
             viewHolder.name = view.findViewById(R.id.portfolioCardTitle);
             viewHolder.chart = view.findViewById(R.id.portfolioCardGraphContainer);
-            viewHolder.checkBoxContainer = view.findViewById(R.id.checkBoxContainer);
+            viewHolder.fakeCheckbox = view.findViewById(R.id.portfolioCardFakeCheckbox);
 
             view.setTag(viewHolder);
         }
@@ -72,10 +73,10 @@ public class CustomPortfolioCardAdapter extends BaseAdapter {
         DrawView chartView = new DrawView(context, portfolios.get(i).getChart());
         viewHolder.chart.addView(chartView);
         if (editmode) {
-            viewHolder.checkBoxContainer.setVisibility(View.VISIBLE);
+            viewHolder.fakeCheckbox.setVisibility(View.VISIBLE);
         }
         else {
-            viewHolder.checkBoxContainer.setVisibility(View.GONE);
+            viewHolder.fakeCheckbox.setVisibility(View.GONE);
         }
         return view;
     }
@@ -85,7 +86,7 @@ public class CustomPortfolioCardAdapter extends BaseAdapter {
         TextView value;
         TextView name;
         RelativeLayout chart;
-        LinearLayout checkBoxContainer;
+        ImageView fakeCheckbox;
     }
 
 }

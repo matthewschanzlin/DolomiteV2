@@ -1,106 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="horizontal"
     tools:context="utils.PortfolioCardAdapterItem">
-
-    <LinearLayout
-        android:id="@+id/checkBoxContainer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:orientation="vertical">
-
-        <CheckBox
-            android:id="@+id/deleteportfolioCheckbox"
-            android:layout_width="wrap_content"
-            android:layout_weight=".5"
-            android:layout_height="150dp"
-            android:layout_gravity="center_vertical"
-            />
-    </LinearLayout>
 
 
     <androidx.cardview.widget.CardView
         android:id="@+id/portfolioCardView"
-        android:layout_width="0dp"
-        android:layout_weight=".5"
+        android:layout_width="wrap_content"
         android:layout_height="150dp"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginEnd="13dp"
+        android:layout_marginBottom="13dp"
         app:cardCornerRadius="8dp"
-        app:cardMaxElevation="1dp"
         app:cardElevation="8dp"
-        android:layout_margin="13dp"
+        app:cardMaxElevation="1dp"
         app:cardPreventCornerOverlap="true">
 
         <LinearLayout
-            android:id="@+id/portfolioCardViewContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="13dp"
-            android:orientation="vertical">
+            android:background="@drawable/twilight_blue_gradient">
 
             <LinearLayout
-                android:id="@+id/portfolioCardViewTopHalfContainer"
+                android:id="@+id/portfolioCardViewContainer"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.5"
+                android:layout_height="match_parent"
+                android:layout_margin="13dp"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/portfolioCardTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/portfolio_name"
-                    android:textSize="22dp"
-                    android:fontFamily="sans-serif-light"
-                    android:textColor="#000000"
-                    android:gravity="left"
-                    android:layout_gravity="left" />
+                <LinearLayout
+                    android:id="@+id/portfolioCardViewTopHalfContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.5"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/portfolioCardTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:fontFamily="sans-serif-light"
+                        android:gravity="left"
+                        android:text="@string/portfolio_name"
+                        android:textColor="@color/lightLilac"
+                        android:textSize="22dp" />
+
+                    <LinearLayout
+                        android:id="@+id/portfolioCardViewValuesTextContainer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/portfolioCardValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="45,000"
+                            android:textColor="@color/lightLilac"
+                            android:textSize="12dp" />
+
+                        <TextView
+                            android:id="@+id/portfolioChangePercentage"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="+2.6%"
+                            android:textColor="@color/lightLilac"
+                            android:textSize="12dp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/portfolioCardViewValuesTextContainer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:id="@+id/portfolioCardContainerBottomHalf"
+                    android:layout_width="match_parent"
+                    android:layout_height="75dp"
+                    android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/portfolioCardValue"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="45,000"
-                        android:textSize="12dp"
-                        android:textColor="#000000"/>
-
-                    <TextView
-                        android:id="@+id/portfolioChangePercentage"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="12dp"
-                        android:text="+2.6%" />
+                    <RelativeLayout
+                        android:id="@+id/portfolioCardGraphContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center" />
 
                 </LinearLayout>
 
             </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/portfolioCardContainerBottomHalf"
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="75dp">
-
-                <RelativeLayout
-                    android:id="@+id/portfolioCardGraphContainer"
-                    android:layout_gravity="center"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-
-            </LinearLayout>
-
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
 
-</LinearLayout>
+    <ImageView
+        android:id="@+id/portfolioCardFakeCheckbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:srcCompat="@drawable/black_circle"
+
+        />
+
+</RelativeLayout>
