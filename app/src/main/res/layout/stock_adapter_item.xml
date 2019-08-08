@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginLeft="10dp"
-    android:background="@android:color/white"
+    android:background="@color/midnightBlue"
     android:orientation="vertical"
     app:clickToClose="true">
 
@@ -66,6 +66,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"
                 android:text="AAPL"
+                android:textColor="@color/lightLilac"
                 android:textSize="32sp" />
 
             <TextView
@@ -74,6 +75,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:text="Apple, Inc."
+                android:textColor="@color/lightLilac"
                 android:textSize="12sp" />
 
         </LinearLayout>
@@ -104,6 +106,7 @@
                 android:layout_gravity="right"
                 android:layout_marginRight="10dp"
                 android:gravity="right"
+                android:textColor="@color/lightLilac"
                 android:text="46,227.08"
                 android:textSize="20dp" />
 
