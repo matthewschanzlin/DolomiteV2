@@ -1,26 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.daimajia.swipe.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/SwipeLayoutId"
     android:layout_height="match_parent"
     android:layout_marginLeft="10dp"
+
     android:background="@color/midnightBlue"
+
+    app:clickToClose="true"
     android:orientation="vertical">
 
+
+    <!-- Surface View Start -->
+    <LinearLayout
+        android:id="@+id/DELETEBUTTONContainer"
+        android:layout_width="60dp"
+        android:layout_height="match_parent"
+        android:background="#ffffff"
+        android:weightSum="1"
+        android:padding="10dp">
+
+        <Button
+            android:id="@+id/DELETEBUTTON"
+            android:layout_width="wrap_content"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:background="@drawable/round_delete_black_18dp"
+            android:layout_gravity="center"
+            android:layout_height="match_parent"
+            android:tooltipText="Delete Portfolio"
+            />
+            />
+        <!--What you want to show in SurfaceView-->
+    </LinearLayout>
+    <!-- Surface View End -->
+
+
+    <!-- Bottom View Start-->
     <LinearLayout
 
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/ticker_adapter_item"
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+
             android:layout_marginLeft="10dp"
             android:layout_weight="1"
             android:text="AAPL"
             android:textColor="@color/lightLilac"
-            android:textSize="36sp" />
+            android:textSize="36sp"
+            android:orientation="vertical"/>
+
+            <TextView
+                android:id="@+id/ticker_adapter_item"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:text="AAPL"
+                android:textSize="32sp" />
+
+            <TextView
+                android:id="@+id/company_name_adapter_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="Apple, Inc."
+                android:textSize="12sp" />
+
+
+        </LinearLayout>
+
 
 
         <ImageView
@@ -60,19 +114,18 @@
                 android:text="+1.48%"
                 android:textColor="@android:color/holo_green_light"
                 android:textSize="15dp" />
+
+
+
+
+            <!-- Bottom View End-->
+
+
         </LinearLayout>
 
 
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/company_name_adapter_item"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:text="Apple, Inc."
-        android:textColor="@color/lightLilac"
-        android:textSize="12sp" />
 
 
-</LinearLayout>
+
+
+</com.daimajia.swipe.SwipeLayout>

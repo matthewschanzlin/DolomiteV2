@@ -4,16 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.room.Room;
 
-import android.app.ActionBar;
-import android.content.Intent;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -58,10 +57,17 @@ public class PortfolioDetailActivity extends AppCompatActivity {
         searchButton = findViewById(R.id.singlePortfolioSearchButton);
         inSearch = false;
 
+
         db = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "database-name").fallbackToDestructiveMigration().allowMainThreadQueries().build();
         // NOTE: MIGHT LOCK UP THREAD. SWITCH TO STATIC NESTED CLASS WHEN POSSIBLE
         dao = db.userDao();
+
+
+
+
+
+
 
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,6 +105,7 @@ public class PortfolioDetailActivity extends AppCompatActivity {
         stockList.setAdapter(customStockAdapter);
     }
 
+
     private void populateStocks() {
         stocks.add(new StockAdapterItem("AAPL", "Apple", "$208.42", "+2.4%"));
         stocks.add(new StockAdapterItem("AMZN", "Amazon", "$1232.32", "-0.4%"));
@@ -118,4 +125,5 @@ public class PortfolioDetailActivity extends AppCompatActivity {
             super.onBackPressed();
         }
     }
+
 }

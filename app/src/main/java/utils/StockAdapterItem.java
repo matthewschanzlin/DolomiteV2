@@ -1,6 +1,8 @@
 package utils;
 
-public class StockAdapterItem {
+import androidx.appcompat.app.AppCompatActivity;
+
+public class StockAdapterItem extends AppCompatActivity {
 
     String ticker;
     String companyName;

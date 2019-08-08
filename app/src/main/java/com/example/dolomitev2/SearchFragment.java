@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 
 
-public class SearchFragment extends Fragment {
+public class SearchFragment extends Fragment  {
 
     public SearchFragment() {
         // Required empty public constructor
