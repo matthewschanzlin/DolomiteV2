@@ -39,16 +39,6 @@
             android:textColor="@color/lightLilac"
             android:textSize="25dp" />
 
-        <Button
-            android:id="@+id/portfoliosDeleteButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:background="@color/lightLilac"
-            android:text="Delete"
-            android:visibility="gone"
-            />
     </RelativeLayout>
 
     <GridView

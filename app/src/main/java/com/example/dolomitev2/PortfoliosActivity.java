@@ -28,7 +28,6 @@ import utils.PortfolioCardAdapterItem;
 public class PortfoliosActivity extends AppCompatActivity {
 
     Button editButton;
-    Button deleteButton;
     GridView portfoliosGrid;
     ArrayList<PortfolioCardAdapterItem> portfolios;
     CustomPortfolioCardAdapter adapter;
@@ -61,7 +60,7 @@ public class PortfoliosActivity extends AppCompatActivity {
                 Log.d("Gridclick", "" + i + ", " + inEditMode);
                 if (i == 0) {
                     if (inEditMode) {
-                        editButton.callOnClick(); // switch edit mode
+                        switchEditMode();
                         return;
                     }
                     else {
@@ -93,40 +92,36 @@ public class PortfoliosActivity extends AppCompatActivity {
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                inEditMode = !inEditMode;
                 if (inEditMode) {
-                    deleteButton.setVisibility(View.VISIBLE);
-                }
-                else {
-                    deleteButton.setVisibility(View.GONE);
-                }
-                adapter.switchEditMode();
-                adapter.notifyDataSetChanged();
-            }
-        });
-
-        deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                for (int i = 1; i < portfolios.size(); i++) {
-                    if (portfolios.get(i).getDeleteMode()) {
-                        dao.deletePortfolio(dao.loadPortfolioByPortfolioName(portfolios.get(i).getName())[0]);
-                        portfolios.remove(i);
-                        i -= 1;
+                    // Delete
+                    for (int i = 1; i < portfolios.size(); i++) {
+                        if (portfolios.get(i).getDeleteMode()) {
+                            dao.deletePortfolio(dao.loadPortfolioByPortfolioName(portfolios.get(i).getName())[0]);
+                            portfolios.remove(i);
+                            i -= 1;
+                        }
                     }
                 }
-                adapter.notifyDataSetChanged();
-                editButton.callOnClick();
+                switchEditMode();
             }
         });
     }
 
-
+    void switchEditMode() {
+        inEditMode = !inEditMode;
+        if (inEditMode) {
+            editButton.setText("Delete");
+        }
+        else {
+            editButton.setText(R.string.edit_button);
+        }
+        adapter.switchEditMode();
+        adapter.notifyDataSetChanged();
+    }
 
     void initData() {
         editButton = findViewById(R.id.portfoliosEditButton);
         portfoliosGrid = findViewById(R.id.portfoliosGridView);
-        deleteButton = findViewById(R.id.portfoliosDeleteButton);
 
         portfolios = new ArrayList<>();
         populatePortfolios();
