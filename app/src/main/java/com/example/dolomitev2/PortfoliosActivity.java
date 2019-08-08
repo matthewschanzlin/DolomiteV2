@@ -9,12 +9,13 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 
-import com.daimajia.swipe.SwipeLayout;
+//import com.daimajia.swipe.SwipeLayout;
 
 import java.util.ArrayList;
 
@@ -55,6 +56,33 @@ public class PortfoliosActivity extends AppCompatActivity {
         portfoliosGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Log.d("Gridclick", "" + i + ", " + inEditMode);
+                if (i == 0) {
+                    if (inEditMode) {
+                        editButton.callOnClick(); // switch edit mode
+                        return;
+                    }
+                    else {
+                        // add new portfolio
+                        dao.insertPortfolio(new Portfolio("Untitled Portfolio"));
+                        PortfolioCardAdapterItem untitledCard =
+                                new PortfolioCardAdapterItem("-2.6%", "4600", "Untitled Portfolio", getPoints());
+                        portfolios.add(untitledCard);
+                        adapter.notifyDataSetChanged();
+                        Intent intent = new Intent(PortfoliosActivity.this, PortfolioDetailActivity.class);
+                        intent.putExtra("Portfolio name", portfolios.get(portfolios.size()-1).getName());
+                        startActivity(intent);
+                        return;
+                    }
+                }
+                else if (inEditMode) {
+                    dao.deletePortfolio(dao.loadPortfolioByPortfolioName(portfolios.get(i).getName())[0]);
+                    portfolios.remove(i);
+                    adapter.notifyDataSetChanged();
+                    editButton.callOnClick(); // switch edit mode
+                    return;
+                }
+                // Start single portfolio activity
                 Intent intent = new Intent(PortfoliosActivity.this, PortfolioDetailActivity.class);
                 intent.putExtra("Portfolio name", portfolios.get(i).getName());
                 startActivity(intent);
@@ -83,18 +111,21 @@ public class PortfoliosActivity extends AppCompatActivity {
 
     }
 
-    void populatePortfolios() {
-
+    ArrayList<Point> getPoints() {
         ArrayList<Point> points = new ArrayList<>();
 
         points.add(new Point(10, 350));
         points.add(new Point(40, 310));
         points.add(new Point(190, 400));
 
+        return points;
+    }
 
+    void populatePortfolios() {
 
+        ArrayList<Point> points = getPoints();
 
-        portfolios.add(new PortfolioCardAdapterItem(" ", "", "New Portfolio", points
+        portfolios.add(new PortfolioCardAdapterItem(" ", "", "Create Portfolio", points
         ));
         portfolios.add(new PortfolioCardAdapterItem(" ", "", "New Portfolio", points
         ));

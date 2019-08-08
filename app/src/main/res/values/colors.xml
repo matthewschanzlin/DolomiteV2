@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorPrimaryDark">#0B091C</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="lightLilac">#BAB8CC</color>
+    <color name="midnightBlue">#0B091C</color>
+    <color name="midnightBlueEnd">#070612</color>
+    <color name="twilightBlue">#101531</color>
+    <color name="twilightBlueEnd">#100D29</color>
 </resources>

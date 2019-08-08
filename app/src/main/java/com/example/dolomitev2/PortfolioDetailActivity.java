@@ -2,6 +2,7 @@ package com.example.dolomitev2;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.room.Room;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +17,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import entities.AdminDAO;
+import entities.AppDatabase;
 import utils.CustomStockAdapter;
 import utils.StockAdapterItem;
 
@@ -31,6 +34,9 @@ public class PortfolioDetailActivity extends AppCompatActivity {
     FrameLayout SearchContainer;
     LinearLayout LinearSearchContainer;
     boolean inSearch;
+
+    AppDatabase db;
+    AdminDAO dao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +56,13 @@ public class PortfolioDetailActivity extends AppCompatActivity {
         SearchContainer = findViewById(R.id.SearchContainer);
         LinearSearchContainer = findViewById(R.id.LinearSearchContainer);
         searchButton = findViewById(R.id.singlePortfolioSearchButton);
+
+
+        db = Room.databaseBuilder(getApplicationContext(),
+                AppDatabase.class, "database-name").fallbackToDestructiveMigration().allowMainThreadQueries().build();
+        // NOTE: MIGHT LOCK UP THREAD. SWITCH TO STATIC NESTED CLASS WHEN POSSIBLE
+        dao = db.userDao();
+
 
 
 
