@@ -5,8 +5,10 @@ import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.daimajia.swipe.SwipeLayout;
 import com.example.dolomitev2.R;
 
 import java.util.ArrayList;
@@ -38,7 +40,7 @@ public class CustomStockAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        ViewHolder viewHolder;
+        final ViewHolder viewHolder;
 
         if (view == null) {
 
@@ -49,6 +51,55 @@ public class CustomStockAdapter extends BaseAdapter {
             viewHolder.value = view.findViewById(R.id.StockAdapterMetaValue);
             viewHolder.ticker = view.findViewById(R.id.ticker_adapter_item);
             viewHolder.companyName = view.findViewById(R.id.company_name_adapter_item);
+            viewHolder.swipeLayout = view.findViewById(R.id.SwipeLayoutId);
+            viewHolder.deleteButton = view.findViewById(R.id.DELETEBUTTON);
+            viewHolder.currentPos = i;
+
+            viewHolder.deleteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    stocks.remove(viewHolder.currentPos);
+                    notifyDataSetChanged();
+                }
+            });
+
+
+
+            viewHolder.swipeLayout .setShowMode(SwipeLayout.ShowMode.PullOut);
+            viewHolder.swipeLayout.addDrag(SwipeLayout.DragEdge.Right,
+                    viewHolder.swipeLayout.findViewById(R.id.DELETEBUTTONContainer));
+
+           viewHolder.swipeLayout .addSwipeListener(new SwipeLayout.SwipeListener() {
+                @Override
+                public void onClose(SwipeLayout layout) {
+                    //when the SurfaceView totally cover the BottomView.
+                }
+
+                @Override
+                public void onUpdate(SwipeLayout layout, int leftOffset, int topOffset) {
+                    //you are swiping.
+                }
+
+                @Override
+                public void onStartOpen(SwipeLayout layout) {
+
+                }
+
+                @Override
+                public void onOpen(SwipeLayout layout) {
+                    //when the BottomView totally show.
+                }
+
+                @Override
+                public void onStartClose(SwipeLayout layout) {
+
+                }
+
+                @Override
+                public void onHandRelease(SwipeLayout layout, float xvel, float yvel) {
+
+                }
+            });
 
             view.setTag(viewHolder);
         }
@@ -75,5 +126,9 @@ public class CustomStockAdapter extends BaseAdapter {
         TextView companyName;
         TextView upDown;
         TextView value;
+        SwipeLayout swipeLayout;
+        Button deleteButton;
+        int currentPos;
+
     }
 }

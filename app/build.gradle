@@ -32,4 +32,9 @@ dependencies {
     implementation files('libs/threetenbp-1.4.0.jar')
     implementation 'androidx.room:room-runtime:2.1.0'
     annotationProcessor 'androidx.room:room-compiler:2.1.0'
+
+
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'com.daimajia.swipelayout:library:1.2.0@aar'
 }

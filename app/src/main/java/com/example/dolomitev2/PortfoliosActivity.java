@@ -3,11 +3,9 @@ package com.example.dolomitev2;
 import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.room.Room;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import androidx.fragment.app.Fragment;
 
-
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
@@ -15,8 +13,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
+
+import com.daimajia.swipe.SwipeLayout;
 
 import java.util.ArrayList;
 
@@ -24,7 +22,6 @@ import entities.AdminDAO;
 import entities.AppDatabase;
 import entities.Portfolio;
 import utils.CustomPortfolioCardAdapter;
-import utils.DrawView;
 import utils.PortfolioCardAdapterItem;
 
 public class PortfoliosActivity extends AppCompatActivity {
@@ -49,6 +46,8 @@ public class PortfoliosActivity extends AppCompatActivity {
         dao = db.userDao();
 
         initData();
+
+
 
         inEditMode = false;
 
@@ -97,8 +96,17 @@ public class PortfoliosActivity extends AppCompatActivity {
 
         portfolios.add(new PortfolioCardAdapterItem(" ", "", "New Portfolio", points
         ));
+        portfolios.add(new PortfolioCardAdapterItem(" ", "", "New Portfolio", points
+        ));
+        portfolios.add(new PortfolioCardAdapterItem(" ", "", "New Portfolio", points
+        ));
+        portfolios.add(new PortfolioCardAdapterItem(" ", "", "New Portfolio", points
+        ));
         Portfolio[] portfolioObjects = dao.loadAllPortfolios();
         for(int i=0; i<portfolioObjects.length; i++) {
+            portfolios.add(new PortfolioCardAdapterItem("-2.6%", "46000", portfolioObjects[i].portfolio_name, points));
+            portfolios.add(new PortfolioCardAdapterItem("-2.6%", "46000", portfolioObjects[i].portfolio_name, points));
+            portfolios.add(new PortfolioCardAdapterItem("-2.6%", "46000", portfolioObjects[i].portfolio_name, points));
             portfolios.add(new PortfolioCardAdapterItem("-2.6%", "46000", portfolioObjects[i].portfolio_name, points));
         }
     }

@@ -20,6 +20,7 @@ public class PortfolioCardAdapterItem extends AppCompatActivity {
     ArrayList<Point> chart;
 
 
+
     public PortfolioCardAdapterItem(String percentChange, String value, String name, ArrayList<Point> chart) {
         this.percentChange = percentChange;
         this.value = value;
