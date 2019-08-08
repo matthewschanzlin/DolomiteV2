@@ -65,13 +65,18 @@ public class PortfoliosActivity extends AppCompatActivity {
                     }
                     else {
                         // add new portfolio
-                        dao.insertPortfolio(new Portfolio("Untitled Portfolio"));
+                        String untitledPortfolioName = "Untitled";
+                        dao.insertPortfolio(new Portfolio(untitledPortfolioName));
+                        // get auto-gen id of portfolio just inserted (for cardAdapterItem constructor)
+                        Portfolio[] tempAllPortfolios = dao.loadAllPortfolios();
                         PortfolioCardAdapterItem untitledCard =
-                                new PortfolioCardAdapterItem("-2.6%", "4600", "Untitled Portfolio", getPoints());
+                                new PortfolioCardAdapterItem("-2.6%", "4600", untitledPortfolioName,
+                                        getPoints(), tempAllPortfolios[tempAllPortfolios.length-1].portfolio_id);
                         portfolios.add(untitledCard);
                         adapter.notifyDataSetChanged();
                         Intent intent = new Intent(PortfoliosActivity.this, PortfolioDetailActivity.class);
-                        intent.putExtra("Portfolio name", portfolios.get(portfolios.size()-1).getName());
+                        intent.putExtra("Portfolio name", untitledPortfolioName);
+                        intent.putExtra("Portfolio id", untitledCard.getId());
                         startActivity(intent);
                         return;
                     }
@@ -84,6 +89,7 @@ public class PortfoliosActivity extends AppCompatActivity {
                 // Start single portfolio activity
                 Intent intent = new Intent(PortfoliosActivity.this, PortfolioDetailActivity.class);
                 intent.putExtra("Portfolio name", portfolios.get(i).getName());
+                intent.putExtra("Portfolio id", portfolios.get(i).getId());
                 startActivity(intent);
             }
         });
@@ -144,12 +150,11 @@ public class PortfoliosActivity extends AppCompatActivity {
 
         ArrayList<Point> points = getPoints();
 
-        portfolios.add(new PortfolioCardAdapterItem(" ", "", "Create Portfolio", points
-        ));
+        portfolios.add(new PortfolioCardAdapterItem(" ", "", "Create Portfolio", points, -1));
 
         Portfolio[] portfolioObjects = dao.loadAllPortfolios();
         for(int i=0; i<portfolioObjects.length; i++) {
-            portfolios.add(new PortfolioCardAdapterItem("-2.6%", "46000", portfolioObjects[i].portfolio_name, points));
+            portfolios.add(new PortfolioCardAdapterItem("-2.6%", "46000", portfolioObjects[i].portfolio_name, points, portfolioObjects[i].portfolio_id));
         }
     }
 }

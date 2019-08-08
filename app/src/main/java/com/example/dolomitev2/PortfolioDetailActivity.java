@@ -25,6 +25,7 @@ import java.util.ArrayList;
 
 import entities.AdminDAO;
 import entities.AppDatabase;
+import entities.Portfolio;
 import utils.CustomStockAdapter;
 import utils.StockAdapterItem;
 
@@ -33,6 +34,7 @@ public class PortfolioDetailActivity extends AppCompatActivity {
     Button button1d, button5d, button1m, button3m, button6m, button1y, button5y, buttonAll,
             singlePortfolioEditButton, searchButton;
     String portfolioName;
+    int portfolioId;
     TextView singlePortfolioTitle;
     ListView stockList;
     ArrayList<StockAdapterItem> stocks;
@@ -94,6 +96,7 @@ public class PortfolioDetailActivity extends AppCompatActivity {
 
 
         portfolioName = getIntent().getStringExtra("Portfolio name");
+        portfolioId = getIntent().getIntExtra("Portfolio id", -1);
         singlePortfolioTitle.setText(portfolioName);
 
         singlePortfolioEditButton.setOnClickListener(new View.OnClickListener() {
@@ -130,7 +133,7 @@ public class PortfolioDetailActivity extends AppCompatActivity {
         stocks.add(new StockAdapterItem("GOOG", "Google", "$485.25", "-8.5%"));
         stocks.add(new StockAdapterItem("SNAP", "Snapchat", "$28.53", "+5.4%"));
         stocks.add(new StockAdapterItem("WALL", "Walmart", "$99.01", "-0.8%"));
-        stocks.add(new StockAdapterItem("REBK", "Rebok", "$42.69", "+1.5%"));
+        stocks.add(new StockAdapterItem("REBK", "Reebok", "$42.69", "+1.5%"));
     }
 
     @Override
@@ -169,10 +172,13 @@ public class PortfolioDetailActivity extends AppCompatActivity {
             public boolean onKey(View view, int i, KeyEvent keyEvent) {
                 if ((keyEvent.getAction() == KeyEvent.ACTION_DOWN) &&
                         (i == KeyEvent.KEYCODE_ENTER)) {
-                    singlePortfolioTitle.setText(titleEdit.getText());
+                    String newPortfolioName = titleEdit.getText().toString();
+                    singlePortfolioTitle.setText(newPortfolioName);
                     titleEdit.setVisibility(View.GONE);
                     singlePortfolioTitle.setVisibility(View.VISIBLE);
                     editButtonPencil.setVisibility(View.VISIBLE);
+                    dao.renamePortfolio(portfolioId,newPortfolioName);
+                    portfolioName = newPortfolioName;
 
 
                     return true;

@@ -19,14 +19,16 @@ public class PortfolioCardAdapterItem extends AppCompatActivity {
     String name;
     ArrayList<Point> chart;
     boolean deleteMode;
+    int id; // FROM DATABASE
 
 
-    public PortfolioCardAdapterItem(String percentChange, String value, String name, ArrayList<Point> chart) {
+    public PortfolioCardAdapterItem(String percentChange, String value, String name, ArrayList<Point> chart, int id) {
         this.percentChange = percentChange;
         this.value = value;
         this.name = name;
         this.chart = chart;
         this.deleteMode = false;
+        this.id = id;
     }
 
     public boolean switchDeleteMode() {
@@ -36,6 +38,10 @@ public class PortfolioCardAdapterItem extends AppCompatActivity {
 
     public boolean getDeleteMode() {
         return deleteMode;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getPercentChange() {

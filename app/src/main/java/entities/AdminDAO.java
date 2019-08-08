@@ -4,6 +4,7 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 @Dao
 public interface AdminDAO {
@@ -16,6 +17,9 @@ public interface AdminDAO {
 
     @Query("select * from portfolio where Portfolio.portfolio_name = :portfolio_name")
     public Portfolio[] loadPortfolioByPortfolioName(String portfolio_name);
+
+    @Query("select * from portfolio where Portfolio.portfolio_id = :portfolio_id")
+    public Portfolio loadPortfolioByPortfolioId(int portfolio_id);
 
     @Query("select * from  Stock")
     public Stock[] loadAllStocks();
@@ -31,4 +35,7 @@ public interface AdminDAO {
 
     @Delete
     public void deleteStock(Stock stock);
+
+    @Query(" update Portfolio set portfolio_name = :name where portfolio_id = :portfolio_id")
+    public int renamePortfolio(int portfolio_id, String name);
 }
