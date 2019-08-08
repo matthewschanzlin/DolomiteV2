@@ -4,11 +4,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.room.Room;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -34,6 +40,8 @@ public class PortfolioDetailActivity extends AppCompatActivity {
     FrameLayout SearchContainer;
     LinearLayout LinearSearchContainer;
     boolean inSearch;
+    Button editButtonPencil;
+    EditText titleEdit;
 
     AppDatabase db;
     AdminDAO dao;
@@ -43,6 +51,7 @@ public class PortfolioDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_portfolio_detail);
 
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         button1d = findViewById(R.id.button1d);
         button5d = findViewById(R.id.button5d);
         button1m = findViewById(R.id.button1m);
@@ -56,17 +65,14 @@ public class PortfolioDetailActivity extends AppCompatActivity {
         SearchContainer = findViewById(R.id.SearchContainer);
         LinearSearchContainer = findViewById(R.id.LinearSearchContainer);
         searchButton = findViewById(R.id.singlePortfolioSearchButton);
+        editButtonPencil = findViewById(R.id.editButtonPencil);
+        titleEdit = findViewById(R.id.singlePortfolioTitleEdit);
 
 
         db = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "database-name").fallbackToDestructiveMigration().allowMainThreadQueries().build();
         // NOTE: MIGHT LOCK UP THREAD. SWITCH TO STATIC NESTED CLASS WHEN POSSIBLE
         dao = db.userDao();
-
-
-
-
-
 
 
         searchButton.setOnClickListener(new View.OnClickListener() {
@@ -97,12 +103,24 @@ public class PortfolioDetailActivity extends AppCompatActivity {
 
             }
         });
+
+
         stockList = findViewById(R.id.singlePortfolioListView);
 
         stocks = new ArrayList<>();
         populateStocks();
         customStockAdapter = new CustomStockAdapter(this, stocks);
         stockList.setAdapter(customStockAdapter);
+        nameChangeListener();
+        portfolioEditListener();
+        titleEdit.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    hideKeyboard(v);
+                }
+            }
+        });
     }
 
 
@@ -127,4 +145,42 @@ public class PortfolioDetailActivity extends AppCompatActivity {
         }
     }
 
+    void nameChangeListener() {
+        editButtonPencil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                singlePortfolioTitle.setVisibility(View.GONE);
+                titleEdit.setVisibility(View.VISIBLE);
+               titleEdit.setText(singlePortfolioTitle.getText());
+               editButtonPencil.setVisibility(View.GONE);
+
+            }
+        });
+    }
+
+    void portfolioEditListener() {
+
+        titleEdit.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                if ((keyEvent.getAction() == KeyEvent.ACTION_DOWN) &&
+                        (i == KeyEvent.KEYCODE_ENTER)) {
+                    singlePortfolioTitle.setText(titleEdit.getText());
+                    titleEdit.setVisibility(View.GONE);
+                    singlePortfolioTitle.setVisibility(View.VISIBLE);
+                    editButtonPencil.setVisibility(View.VISIBLE);
+
+
+                    return true;
+                }
+                return false;
+            }
+        });
+
+    }
+
+    public void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager =(InputMethodManager)this.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
 }
