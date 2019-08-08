@@ -3,6 +3,7 @@ package com.example.dolomitev2;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -49,7 +50,6 @@ public class PortfolioDetailActivity extends AppCompatActivity {
         SearchContainer = findViewById(R.id.SearchContainer);
         LinearSearchContainer = findViewById(R.id.LinearSearchContainer);
         searchButton = findViewById(R.id.singlePortfolioSearchButton);
-        inSearch = false;
 
 
 
@@ -105,11 +105,12 @@ public class PortfolioDetailActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if (inSearch) {
-            inSearch = !inSearch;
             LinearSearchContainer.setVisibility(View.GONE);
+            inSearch = false;
 
         } else {
-            super.onBackPressed();
+            Intent intent = new Intent(PortfolioDetailActivity.this, PortfoliosActivity.class);
+            startActivity(intent);
         }
     }
 
