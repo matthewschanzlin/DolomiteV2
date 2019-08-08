@@ -34,6 +34,11 @@ public class CustomPortfolioCardAdapter extends BaseAdapter {
 
     public void switchEditMode() {
         editmode = ! editmode;
+        if (! editmode){
+            for (PortfolioCardAdapterItem portfolio : portfolios) {
+                portfolio.deleteMode = false;
+            }
+        }
     }
 
     @Override
@@ -73,7 +78,11 @@ public class CustomPortfolioCardAdapter extends BaseAdapter {
         DrawView chartView = new DrawView(context, portfolios.get(i).getChart());
         viewHolder.chart.addView(chartView);
         if (editmode && i!=0) {
-            viewHolder.background.setBackground(context.getDrawable(R.drawable.twilight_blue_gradient_edit));
+            if (portfolios.get(i).getDeleteMode()) {
+                viewHolder.background.setBackground(context.getDrawable(R.drawable.twilight_blue_gradient_selected));
+            } else {
+                viewHolder.background.setBackground(context.getDrawable(R.drawable.twilight_blue_gradient_edit));
+            }
         }
         else {
             viewHolder.background.setBackground(context.getDrawable(R.drawable.twilight_blue_gradient));

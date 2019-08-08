@@ -28,6 +28,7 @@ import utils.PortfolioCardAdapterItem;
 public class PortfoliosActivity extends AppCompatActivity {
 
     Button editButton;
+    Button deleteButton;
     GridView portfoliosGrid;
     ArrayList<PortfolioCardAdapterItem> portfolios;
     CustomPortfolioCardAdapter adapter;
@@ -76,10 +77,8 @@ public class PortfoliosActivity extends AppCompatActivity {
                     }
                 }
                 else if (inEditMode) {
-                    dao.deletePortfolio(dao.loadPortfolioByPortfolioName(portfolios.get(i).getName())[0]);
-                    portfolios.remove(i);
+                    adapter.getItem(i).switchDeleteMode();
                     adapter.notifyDataSetChanged();
-                    editButton.callOnClick(); // switch edit mode
                     return;
                 }
                 // Start single portfolio activity
@@ -94,15 +93,39 @@ public class PortfoliosActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 inEditMode = !inEditMode;
+                if (inEditMode) {
+                    deleteButton.setVisibility(View.VISIBLE);
+                }
+                else {
+                    deleteButton.setVisibility(View.GONE);
+                }
                 adapter.switchEditMode();
                 adapter.notifyDataSetChanged();
             }
         });
+
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                for (int i = 1; i < portfolios.size(); i++) {
+                    if (portfolios.get(i).getDeleteMode()) {
+                        dao.deletePortfolio(dao.loadPortfolioByPortfolioName(portfolios.get(i).getName())[0]);
+                        portfolios.remove(i);
+                        i -= 1;
+                    }
+                }
+                adapter.notifyDataSetChanged();
+                editButton.callOnClick();
+            }
+        });
     }
+
+
 
     void initData() {
         editButton = findViewById(R.id.portfoliosEditButton);
         portfoliosGrid = findViewById(R.id.portfoliosGridView);
+        deleteButton = findViewById(R.id.portfoliosDeleteButton);
 
         portfolios = new ArrayList<>();
         populatePortfolios();
@@ -131,6 +154,6 @@ public class PortfoliosActivity extends AppCompatActivity {
         Portfolio[] portfolioObjects = dao.loadAllPortfolios();
         for(int i=0; i<portfolioObjects.length; i++) {
             portfolios.add(new PortfolioCardAdapterItem("-2.6%", "46000", portfolioObjects[i].portfolio_name, points));
-                  }
+        }
     }
 }

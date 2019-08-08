@@ -18,7 +18,7 @@ public class PortfolioCardAdapterItem extends AppCompatActivity {
     String value;
     String name;
     ArrayList<Point> chart;
-
+    boolean deleteMode;
 
 
     public PortfolioCardAdapterItem(String percentChange, String value, String name, ArrayList<Point> chart) {
@@ -26,7 +26,16 @@ public class PortfolioCardAdapterItem extends AppCompatActivity {
         this.value = value;
         this.name = name;
         this.chart = chart;
+        this.deleteMode = false;
+    }
 
+    public boolean switchDeleteMode() {
+        deleteMode = ! deleteMode;
+        return getDeleteMode();
+    }
+
+    public boolean getDeleteMode() {
+        return deleteMode;
     }
 
     public String getPercentChange() {
