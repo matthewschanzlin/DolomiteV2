@@ -18,6 +18,7 @@
             android:background="@drawable/rounded_edittext_states"
             android:layout_weight="0.075"
             android:layout_margin="1dp"
+            android:inputType="textPersonName"
             android:layout_gravity="center"/>
 
         <ListView

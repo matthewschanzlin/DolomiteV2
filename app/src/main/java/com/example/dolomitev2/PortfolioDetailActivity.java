@@ -50,7 +50,7 @@ public class PortfolioDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_portfolio_detail);
-
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         button1d = findViewById(R.id.button1d);
         button5d = findViewById(R.id.button5d);
@@ -153,6 +153,10 @@ public class PortfolioDetailActivity extends AppCompatActivity {
                 titleEdit.setVisibility(View.VISIBLE);
                titleEdit.setText(singlePortfolioTitle.getText());
                editButtonPencil.setVisibility(View.GONE);
+
+                titleEdit.requestFocus();
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.showSoftInput(titleEdit, InputMethodManager.SHOW_IMPLICIT);
 
             }
         });

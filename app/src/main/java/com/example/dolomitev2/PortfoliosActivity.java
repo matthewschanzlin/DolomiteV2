@@ -41,6 +41,7 @@ public class PortfoliosActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_portfolios);
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
         db = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "database-name").fallbackToDestructiveMigration().allowMainThreadQueries().build();
