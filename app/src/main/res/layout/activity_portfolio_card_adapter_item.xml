@@ -22,6 +22,7 @@
         app:cardPreventCornerOverlap="true">
 
         <LinearLayout
+            android:id="@+id/portfolioCardViewBackground"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/twilight_blue_gradient">
@@ -30,7 +31,7 @@
                 android:id="@+id/portfolioCardViewContainer"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="13dp"
+                android:padding="13dp"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -95,14 +96,5 @@
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
-
-    <ImageView
-        android:id="@+id/portfolioCardFakeCheckbox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:srcCompat="@drawable/black_circle"
-
-        />
 
 </RelativeLayout>

@@ -40,6 +40,8 @@
                 android:id="@+id/singlePortfolioTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:maxLength="22"
+                android:ellipsize="marquee"
                 android:layout_centerInParent="true"
                 android:fontFamily="sans-serif"
                 android:text="@string/portfolios_title"
@@ -49,9 +51,10 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="245dp"
+                android:layout_toEndOf="@+id/singlePortfolioTitle"
+                android:layout_marginLeft="0dp"
                 android:layout_marginTop="12dp"
-                android:background="@drawable/outline_edit_black_18dp"
+                android:background="@drawable/edit_pencil_grey"
                 android:minWidth="0dp"
                 android:minHeight="0dp" />
 

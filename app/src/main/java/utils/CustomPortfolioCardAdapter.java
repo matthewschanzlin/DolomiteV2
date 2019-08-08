@@ -59,7 +59,7 @@ public class CustomPortfolioCardAdapter extends BaseAdapter {
             viewHolder.value = view.findViewById(R.id.portfolioCardValue);
             viewHolder.name = view.findViewById(R.id.portfolioCardTitle);
             viewHolder.chart = view.findViewById(R.id.portfolioCardGraphContainer);
-            viewHolder.fakeCheckbox = view.findViewById(R.id.portfolioCardFakeCheckbox);
+            viewHolder.background = view.findViewById(R.id.portfolioCardViewBackground);
 
             view.setTag(viewHolder);
         }
@@ -72,11 +72,11 @@ public class CustomPortfolioCardAdapter extends BaseAdapter {
         viewHolder.value.setText(portfolios.get(i).getValue());
         DrawView chartView = new DrawView(context, portfolios.get(i).getChart());
         viewHolder.chart.addView(chartView);
-        if (editmode) {
-            viewHolder.fakeCheckbox.setVisibility(View.VISIBLE);
+        if (editmode && i!=0) {
+            viewHolder.background.setBackground(context.getDrawable(R.drawable.twilight_blue_gradient_edit));
         }
         else {
-            viewHolder.fakeCheckbox.setVisibility(View.GONE);
+            viewHolder.background.setBackground(context.getDrawable(R.drawable.twilight_blue_gradient));
         }
         return view;
     }
@@ -86,7 +86,7 @@ public class CustomPortfolioCardAdapter extends BaseAdapter {
         TextView value;
         TextView name;
         RelativeLayout chart;
-        ImageView fakeCheckbox;
+        LinearLayout background;
     }
 
 }
