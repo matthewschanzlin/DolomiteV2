@@ -13,6 +13,7 @@
         <EditText
             android:id="@+id/searchSearchBar"
             android:hint="Search stocks"
+            android:paddingLeft="10dp"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="@drawable/rounded_edittext_states"
@@ -22,6 +23,7 @@
             android:layout_gravity="center"/>
 
         <ListView
+            android:id="@+id/searchStockList"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_weight="0.925">
