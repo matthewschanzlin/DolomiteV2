@@ -29,7 +29,8 @@
             android:background="@color/lightLilac"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:text="ADD" />
+            android:text="ADD"
+            android:layout_marginRight="5dp"/>
         <Button
             android:id="@+id/ViewPortfolioButton"
             android:layout_width="0dp"
