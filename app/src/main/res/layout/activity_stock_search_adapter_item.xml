@@ -18,7 +18,7 @@
         android:id="@+id/StockSearchSwipeContainer"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:background="#ffffff"
+        android:background="@color/midnightBlue"
         android:padding="10dp"
         android:weightSum="1">
 
@@ -26,6 +26,7 @@
             android:id="@+id/AddStockSearchButton"
             android:layout_width="0dp"
             android:layout_weight=".5"
+            android:background="@color/lightLilac"
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:text="ADD" />
@@ -33,6 +34,7 @@
             android:id="@+id/ViewPortfolioButton"
             android:layout_width="0dp"
             android:layout_weight=".5"
+            android:background="@color/lightLilac"
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:text="VIEW" />
