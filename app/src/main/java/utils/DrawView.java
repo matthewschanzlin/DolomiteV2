@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
+import android.graphics.PointF;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -16,9 +17,9 @@ public class DrawView extends View {
     Paint paint;
     Path path;
     Point startPoint;
-    ArrayList<Point> linePoints;
+    ArrayList<PointF> linePoints;
 
-    public DrawView(Context context, ArrayList<Point> points) {
+    public DrawView(Context context, ArrayList<PointF> points) {
         super(context);
 
         startPoint = new Point(0, 300);
@@ -40,7 +41,6 @@ public class DrawView extends View {
         paint = new Paint();
 
         paint.setStyle(Paint.Style.STROKE);
-
     }
 
     /*public ArrayList<Point> getPoints(StockAdapterItem stock) {

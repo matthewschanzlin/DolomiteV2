@@ -8,6 +8,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.graphics.Point;
+import android.graphics.PointF;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -91,12 +92,12 @@ public class PortfoliosActivity extends AppCompatActivity {
 
     }
 
-    ArrayList<Point> getPoints() {
-        ArrayList<Point> points = new ArrayList<>();
+    ArrayList<PointF> getPoints() {
+        ArrayList<PointF> points = new ArrayList<>();
 
-        points.add(new Point(10, 350));
-        points.add(new Point(40, 310));
-        points.add(new Point(190, 400));
+        points.add(new PointF(10, 350));
+        points.add(new PointF(40, 310));
+        points.add(new PointF(190, 400));
 
         return points;
     }
@@ -106,7 +107,7 @@ public class PortfoliosActivity extends AppCompatActivity {
      */
     void populatePortfolios() {
 
-        ArrayList<Point> points = getPoints();
+        ArrayList<PointF> points = getPoints();
 
         portfolios.add(new PortfolioCardAdapterItem(" ", "", "Create Portfolio", points, -1));
 

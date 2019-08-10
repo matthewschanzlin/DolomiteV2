@@ -1,6 +1,7 @@
 package utils;
 
 import android.graphics.Point;
+import android.graphics.PointF;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,12 +18,12 @@ public class PortfolioCardAdapterItem extends AppCompatActivity {
     String percentChange;
     String value;
     String name;
-    ArrayList<Point> chart;
+    ArrayList<PointF> chart;
     boolean deleteMode;
     int id; // FROM DATABASE
 
 
-    public PortfolioCardAdapterItem(String percentChange, String value, String name, ArrayList<Point> chart, int id) {
+    public PortfolioCardAdapterItem(String percentChange, String value, String name, ArrayList<PointF> chart, int id) {
         this.percentChange = percentChange;
         this.value = value;
         this.name = name;
@@ -56,7 +57,7 @@ public class PortfolioCardAdapterItem extends AppCompatActivity {
         return name;
     }
 
-    public ArrayList<Point> getChart() {
+    public ArrayList<PointF> getChart() {
         return chart;
     }
 

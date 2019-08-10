@@ -74,6 +74,12 @@ public class PortfolioDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_portfolio_detail);
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
+        // Init database
+        db = Room.databaseBuilder(getApplicationContext(),
+                AppDatabase.class, "database-name").fallbackToDestructiveMigration().allowMainThreadQueries().build();
+        // NOTE: MIGHT LOCK UP THREAD. SWITCH TO STATIC NESTED CLASS WHEN POSSIBLE
+        dao = db.userDao();
+
         //Initializing View
         initData();
         populatePortfolio();
@@ -118,12 +124,6 @@ public class PortfolioDetailActivity extends AppCompatActivity {
         relativeLayout = findViewById(R.id.listViewHolder);
         stockList = findViewById(R.id.singlePortfolioListView);
         stocks = new ArrayList<>();
-
-
-        db = Room.databaseBuilder(getApplicationContext(),
-                AppDatabase.class, "database-name").fallbackToDestructiveMigration().allowMainThreadQueries().build();
-        // NOTE: MIGHT LOCK UP THREAD. SWITCH TO STATIC NESTED CLASS WHEN POSSIBLE
-        dao = db.userDao();
 
         for (int i = 0; i<timeFrameButtons.length; i++) {
             timeFrameButtons[i].setTag(timeFrameButtons[i].getId(),Integer.toString(i));
