@@ -64,6 +64,7 @@
                             android:layout_height="wrap_content"
                             android:text="45,000"
                             android:textColor="@color/lightLilac"
+                            android:layout_marginRight="5dp"
                             android:textSize="12dp" />
 
                         <TextView

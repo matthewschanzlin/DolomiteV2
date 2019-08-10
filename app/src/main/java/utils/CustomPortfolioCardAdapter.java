@@ -1,6 +1,7 @@
 package utils;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -86,6 +87,12 @@ public class CustomPortfolioCardAdapter extends BaseAdapter {
         }
         else {
             viewHolder.background.setBackground(context.getDrawable(R.drawable.twilight_blue_gradient));
+        }
+
+        if (((viewHolder.percentChange.getText()).toString().substring(0,1)).equals("+")) {
+            viewHolder.percentChange.setTextColor(Color.GREEN);
+        } else {
+            viewHolder.percentChange.setTextColor(Color.RED);
         }
         return view;
     }
