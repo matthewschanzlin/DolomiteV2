@@ -7,21 +7,30 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+import android.content.Context;
+import android.graphics.Color;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.daimajia.swipe.SwipeLayout;
 import com.example.dolomitev2.R;
 
 import java.util.ArrayList;
 
-public class CustomStockAdapter extends BaseAdapter {
 
-    public CustomStockAdapter(Context context, ArrayList<StockAdapterItem> stocks) {
+public class CustomStockSearchAdapter extends BaseAdapter {
+    Context context;
+    ArrayList<stock_search_adapter_item> stocks;
+
+    public CustomStockSearchAdapter(Context context, ArrayList<stock_search_adapter_item> stocks) {
         this.context = context;
         this.stocks = stocks;
     }
 
-    Context context;
-    ArrayList<StockAdapterItem> stocks;
+
 
     @Override
     public int getCount() {
@@ -44,32 +53,22 @@ public class CustomStockAdapter extends BaseAdapter {
 
         if (view == null) {
 
-            view = View.inflate(context, R.layout.stock_adapter_item, null);
+            view = View.inflate(context, R.layout.activity_stock_search_adapter_item, null);
 
             viewHolder = new ViewHolder();
-            viewHolder.upDown = view.findViewById(R.id.StockAdapterMetaUpDown);
-            viewHolder.value = view.findViewById(R.id.StockAdapterMetaValue);
-            viewHolder.ticker = view.findViewById(R.id.ticker_adapter_item);
-            viewHolder.companyName = view.findViewById(R.id.company_name_adapter_item);
-            viewHolder.swipeLayout = view.findViewById(R.id.SwipeLayoutId);
-            viewHolder.deleteButton = view.findViewById(R.id.DELETEBUTTON);
+            viewHolder.upDown = view.findViewById(R.id.search_StockAdapterMetaUpDown);
+            viewHolder.value = view.findViewById(R.id.search_StockAdapterMetaValue);
+            viewHolder.ticker = view.findViewById(R.id.search_ticker_adapter_item);
+            viewHolder.companyName = view.findViewById(R.id.search_company_name_adapter_item);
+            viewHolder.swipeLayout = view.findViewById(R.id.SearchSwipeLayoutId);
+            viewHolder.addStockButton = view.findViewById(R.id.AddStockSearchButton);
+            viewHolder.viewPortfolioAffectButton = view.findViewById(R.id.ViewPortfolioButton);
             viewHolder.currentPos = i;
-
-            viewHolder.deleteButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    stocks.remove(viewHolder.currentPos);
-                    notifyDataSetChanged();
-                }
-            });
-
 
 
             viewHolder.swipeLayout .setShowMode(SwipeLayout.ShowMode.PullOut);
             viewHolder.swipeLayout.addDrag(SwipeLayout.DragEdge.Right,
-                    viewHolder.swipeLayout.findViewById(R.id.DELETEBUTTONContainer));
-
-
+                    viewHolder.swipeLayout.findViewById(R.id.StockSearchSwipeContainer));
 
             view.setTag(viewHolder);
         }
@@ -97,7 +96,7 @@ public class CustomStockAdapter extends BaseAdapter {
         TextView upDown;
         TextView value;
         SwipeLayout swipeLayout;
-        Button deleteButton;
+        Button addStockButton, viewPortfolioAffectButton;
         int currentPos;
 
     }

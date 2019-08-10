@@ -27,7 +27,8 @@ import java.util.ArrayList;
 
 import utils.CustomStockAdapter;
 import utils.StockAdapterItem;
-
+import utils.stock_search_adapter_item;
+import utils.CustomStockSearchAdapter;
 
 public class SearchFragment extends Fragment {
     LinearLayout LinearSearchContainer;
@@ -35,8 +36,8 @@ public class SearchFragment extends Fragment {
     EditText searchBar;
     String searchTerm;
 
-    ArrayList<StockAdapterItem> searchedStocks;
-    CustomStockAdapter searchedCustomStockAdapter;
+    ArrayList<stock_search_adapter_item> searchedStocks;
+    CustomStockSearchAdapter searchedCustomStockAdapter;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -53,7 +54,7 @@ public class SearchFragment extends Fragment {
         stockList = view.findViewById(R.id.searchStockList);
 
         searchedStocks = new ArrayList<>();
-        searchedCustomStockAdapter = new CustomStockAdapter(getContext(), searchedStocks);
+        searchedCustomStockAdapter = new CustomStockSearchAdapter(getContext(), searchedStocks);
         stockList.setAdapter(searchedCustomStockAdapter);
 
         searchBar.setOnKeyListener(new View.OnKeyListener() {
@@ -94,12 +95,12 @@ public class SearchFragment extends Fragment {
 
     private void populateSearchedStocks() {
         // different implementation necessary after API integration
-        searchedStocks.add(new StockAdapterItem("AAPL", "Apple", "$208.42", "+2.4%"));
-        searchedStocks.add(new StockAdapterItem("AMZN", "Amazon", "$1232.32", "-0.4%"));
-        searchedStocks.add(new StockAdapterItem("GOOG", "Google", "$485.25", "-8.5%"));
-        searchedStocks.add(new StockAdapterItem("SNAP", "Snapchat", "$28.53", "+5.4%"));
-        searchedStocks.add(new StockAdapterItem("WALL", "Walmart", "$99.01", "-0.8%"));
-        searchedStocks.add(new StockAdapterItem("REBK", "Reebok", "$42.69", "+1.5%"));
+        searchedStocks.add(new stock_search_adapter_item("AAPL", "Apple", "$208.42", "+2.4%"));
+        searchedStocks.add(new stock_search_adapter_item("AMZN", "Amazon", "$1232.32", "-0.4%"));
+        searchedStocks.add(new stock_search_adapter_item("GOOG", "Google", "$485.25", "-8.5%"));
+        searchedStocks.add(new stock_search_adapter_item("SNAP", "Snapchat", "$28.53", "+5.4%"));
+        searchedStocks.add(new stock_search_adapter_item("WALL", "Walmart", "$99.01", "-0.8%"));
+        searchedStocks.add(new stock_search_adapter_item("REBK", "Reebok", "$42.69", "+1.5%"));
     }
 
     private void hideKeyboard(View view) {

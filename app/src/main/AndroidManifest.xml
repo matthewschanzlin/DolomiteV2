@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name="utils.stock_search_adapter_item"></activity>
         <activity android:name=".PortfolioDetailActivity" />
         <activity android:name=".PortfoliosActivity">
             <intent-filter>

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<com.daimajia.swipe.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/SearchSwipeLayoutId"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="10dp"
+    android:background="@color/midnightBlue"
+    android:orientation="vertical"
+    app:clickToClose="true">
+
+    <!-- Surface View Start -->
+
+
+    -
+
+    <LinearLayout
+        android:id="@+id/StockSearchSwipeContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="#ffffff"
+        android:padding="10dp"
+        android:weightSum="1">
+
+        <Button
+            android:id="@+id/AddStockSearchButton"
+            android:layout_width="0dp"
+            android:layout_weight=".5"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:text="ADD" />
+        <Button
+            android:id="@+id/ViewPortfolioButton"
+            android:layout_width="0dp"
+            android:layout_weight=".5"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:text="VIEW" />
+
+
+        />
+        <!--What you want to show in SurfaceView-->
+
+
+    </LinearLayout>
+
+    <!-- Surface View End -->
+
+
+    <!-- Bottom View Start-->
+
+
+    -
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+
+        -
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/search_ticker_adapter_item"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:text="AAPL"
+                android:textColor="@color/lightLilac"
+                android:textSize="32sp" />
+
+            <TextView
+                android:id="@+id/search_company_name_adapter_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="Apple, Inc."
+                android:textColor="@color/lightLilac"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/search_StockAdapterItemImg"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="35dp"
+            android:layout_marginRight="35dp"
+            android:layout_weight="1"
+            android:scaleType="fitXY"
+            android:src="@drawable/stock_path" />
+
+
+        -
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/search_StockAdapterMetaValue"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="right"
+                android:layout_marginRight="10dp"
+                android:gravity="right"
+                android:textColor="@color/lightLilac"
+                android:text="46,227.08"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/search_StockAdapterMetaUpDown"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="right"
+                android:layout_marginRight="10dp"
+                android:gravity="right"
+                android:text="+1.48%"
+                android:textColor="@android:color/holo_green_light"
+                android:textSize="15dp" />
+
+            <!-- Bottom View End-->
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</com.daimajia.swipe.SwipeLayout>
