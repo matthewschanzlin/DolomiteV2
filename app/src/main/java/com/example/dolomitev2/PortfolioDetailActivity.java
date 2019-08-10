@@ -1,6 +1,7 @@
 package com.example.dolomitev2;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.room.Room;
 
@@ -87,7 +88,8 @@ public class PortfolioDetailActivity extends AppCompatActivity {
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 
                 fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.setCustomAnimations(R.anim.slide_in_up, R.anim.slide_out_up);
+                fragmentTransaction.setCustomAnimations(R.anim.slide_in_up, R.anim.slide_out_up,
+                        R.anim.slide_in_up, R.anim.slide_out_up);
                 fragmentTransaction.replace(R.id.SearchContainer, new SearchFragment());
 
                 fragmentTransaction.commit();
@@ -140,6 +142,8 @@ public class PortfolioDetailActivity extends AppCompatActivity {
     public void onBackPressed() {
         if (inSearch) {
             LinearSearchContainer.setVisibility(View.GONE);
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.remove(getSupportFragmentManager().findFragmentById(R.id.SearchContainer)).commit();
             inSearch = false;
 
         } else {
