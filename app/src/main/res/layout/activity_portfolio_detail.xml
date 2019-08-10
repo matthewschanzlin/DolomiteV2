@@ -233,6 +233,7 @@
     </LinearLayout>
 
     <RelativeLayout
+        android:id="@+id/listViewHolder"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.5">
@@ -247,7 +248,8 @@
     <LinearLayout
         android:id="@+id/LinearSearchContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"
         android:visibility="gone">
 
 

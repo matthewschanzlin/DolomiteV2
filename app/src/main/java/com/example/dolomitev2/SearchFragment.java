@@ -107,32 +107,4 @@ public class SearchFragment extends Fragment {
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-    /*
-    @Override
-    public Animator onCreateAnimator(int transit, boolean enter, int nextAnim) {
-
-        final int animatorId = (enter) ? R.animator.slide_up : R.animator.slide_down;
-        final Animator anim = AnimatorInflater.loadAnimator(getActivity(), animatorId);
-        anim.addListener(new AnimatorListenerAdapter() {
-
-            @Override
-            public void onAnimationStart(Animator animation) {
-                Log.d("START", "HELLO");
-                Toast.makeText(getContext(), "end", Toast.LENGTH_SHORT);
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                Log.d("END", "HELLO");
-                Toast.makeText(getContext(), "start", Toast.LENGTH_SHORT);
-               // LinearSearchContainer.setVisibility(View.GONE);
-            }
-        });
-
-        return anim;
-
-
-    }
-    */
 }
