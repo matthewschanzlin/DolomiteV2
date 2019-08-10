@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.room.Room;
 
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +15,8 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -141,10 +145,45 @@ public class PortfolioDetailActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if (inSearch) {
-            LinearSearchContainer.setVisibility(View.GONE);
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.remove(getSupportFragmentManager().findFragmentById(R.id.SearchContainer)).commit();
+
+            Fragment searchFragment = getSupportFragmentManager().findFragmentById(R.id.SearchContainer);
             inSearch = false;
+
+
+          //  fragmentTransaction.setCustomAnimations(R.animator.slide_up, R.animator.slide_down);
+
+
+            if (searchFragment != null) {
+                Animation animation = AnimationUtils.loadAnimation(searchFragment.getActivity(), R.anim.slide_out_up);
+                animation.setDuration(getResources().getInteger(android.R.integer.config_shortAnimTime));
+
+                animation.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                        fragmentTransaction.remove(getSupportFragmentManager().findFragmentById(R.id.SearchContainer)).commit();
+                        LinearSearchContainer.setVisibility(View.GONE);
+
+
+
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+
+                searchFragment.getView().startAnimation(animation);
+            }
+
+
+
 
         } else {
             Intent intent = new Intent(PortfolioDetailActivity.this, PortfoliosActivity.class);
@@ -158,8 +197,8 @@ public class PortfolioDetailActivity extends AppCompatActivity {
             public void onClick(View view) {
                 singlePortfolioTitle.setVisibility(View.GONE);
                 titleEdit.setVisibility(View.VISIBLE);
-               titleEdit.setText(singlePortfolioTitle.getText());
-               editButtonPencil.setVisibility(View.GONE);
+                titleEdit.setText(singlePortfolioTitle.getText());
+                editButtonPencil.setVisibility(View.GONE);
 
                 titleEdit.requestFocus();
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -181,7 +220,7 @@ public class PortfolioDetailActivity extends AppCompatActivity {
                     titleEdit.setVisibility(View.GONE);
                     singlePortfolioTitle.setVisibility(View.VISIBLE);
                     editButtonPencil.setVisibility(View.VISIBLE);
-                    dao.renamePortfolio(portfolioId,newPortfolioName);
+                    dao.renamePortfolio(portfolioId, newPortfolioName);
                     portfolioName = newPortfolioName;
 
 
@@ -194,7 +233,7 @@ public class PortfolioDetailActivity extends AppCompatActivity {
     }
 
     public void hideKeyboard(View view) {
-        InputMethodManager inputMethodManager =(InputMethodManager)this.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        InputMethodManager inputMethodManager = (InputMethodManager) this.getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }
