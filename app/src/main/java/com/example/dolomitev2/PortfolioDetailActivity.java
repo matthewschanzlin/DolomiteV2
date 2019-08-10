@@ -10,6 +10,7 @@ import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -38,6 +39,8 @@ public class PortfolioDetailActivity extends AppCompatActivity {
 
     Button button1d, button5d, button1m, button3m, button6m, button1y, button5y, buttonAll,
             singlePortfolioEditButton, searchButton;
+    Button[] timeFrameButtons;
+    Button selectedTimeFrameButton;
     String portfolioName;
     int portfolioId;
     TextView singlePortfolioTitle;
@@ -59,14 +62,16 @@ public class PortfolioDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_portfolio_detail);
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-        button1d = findViewById(R.id.button1d);
-        button5d = findViewById(R.id.button5d);
-        button1m = findViewById(R.id.button1m);
-        button3m = findViewById(R.id.button3m);
-        button6m = findViewById(R.id.button6m);
-        button1y = findViewById(R.id.button1y);
-        button5y = findViewById(R.id.button5y);
-        buttonAll = findViewById(R.id.buttonAll);
+        timeFrameButtons = new Button[8];
+        timeFrameButtons[0] = findViewById(R.id.button1d);
+        timeFrameButtons[1] = findViewById(R.id.button5d);
+        timeFrameButtons[2] = findViewById(R.id.button1m);
+        timeFrameButtons[3] = findViewById(R.id.button3m);
+        timeFrameButtons[4] = findViewById(R.id.button6m);
+        timeFrameButtons[5] = findViewById(R.id.button1y);
+        timeFrameButtons[6] = findViewById(R.id.button5y);
+        timeFrameButtons[7] = findViewById(R.id.buttonAll);
+        selectedTimeFrameButton = timeFrameButtons[0];
         singlePortfolioEditButton = findViewById(R.id.singlePortfolioEditButton);
         singlePortfolioTitle = findViewById(R.id.singlePortfolioTitle);
         SearchContainer = findViewById(R.id.SearchContainer);
@@ -81,6 +86,29 @@ public class PortfolioDetailActivity extends AppCompatActivity {
         // NOTE: MIGHT LOCK UP THREAD. SWITCH TO STATIC NESTED CLASS WHEN POSSIBLE
         dao = db.userDao();
 
+        for (int i = 0; i<timeFrameButtons.length; i++) {
+            timeFrameButtons[i].setTag(timeFrameButtons[i].getId(),Integer.toString(i));
+            timeFrameButtons[i].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    switch(view.getTag(view.getId()).toString()) {
+                        case "0":
+                        case "1":
+                        case "2":
+                        case "3":
+                        case "4":
+                        case "5":
+                        case "6":
+                        case "7":
+                    }
+                    view.setBackgroundResource(R.drawable.timeframe_button_selected);
+                    ((Button)view).setTextColor(getResources().getColor(R.color.lightLilac, getTheme()));
+                    selectedTimeFrameButton.setBackgroundColor(getResources().getColor(R.color.lightLilac, getTheme()));
+                    selectedTimeFrameButton.setTextColor(getResources().getColor(R.color.midnightBlue, getTheme()));
+                    selectedTimeFrameButton = (Button)view;
+                }
+            });
+        }
 
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,6 +160,9 @@ public class PortfolioDetailActivity extends AppCompatActivity {
         });
     }
 
+    void unselectTimeFrameButton(Button timeFrameButton) {
+        timeFrameButton.setBackgroundResource(R.color.lightLilac);
+    }
 
     private void populateStocks() {
         stocks.add(new StockAdapterItem("AAPL", "Apple", "$208.42", "+2.4%"));

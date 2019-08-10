@@ -23,12 +23,20 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
+import utils.CustomStockAdapter;
+import utils.StockAdapterItem;
+
 
 public class SearchFragment extends Fragment {
     LinearLayout LinearSearchContainer;
     ListView stockList;
     EditText searchBar;
     String searchTerm;
+
+    ArrayList<StockAdapterItem> searchedStocks;
+    CustomStockAdapter searchedCustomStockAdapter;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -43,6 +51,11 @@ public class SearchFragment extends Fragment {
         LinearSearchContainer = view.findViewById(R.id.LinearSearchContainer);
         searchBar = view.findViewById(R.id.searchSearchBar);
         stockList = view.findViewById(R.id.searchStockList);
+
+        searchedStocks = new ArrayList<>();
+        searchedCustomStockAdapter = new CustomStockAdapter(getContext(), searchedStocks);
+        stockList.setAdapter(searchedCustomStockAdapter);
+
         searchBar.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View view, int i, KeyEvent keyEvent) {
@@ -51,6 +64,8 @@ public class SearchFragment extends Fragment {
                     searchTerm = searchBar.getText().toString();
                     Log.d("searchTerm", searchTerm);
                     hideKeyboard(view);
+                    populateSearchedStocks();
+                    searchedCustomStockAdapter.notifyDataSetChanged();
                     return true;
                 }
                 return false;
@@ -75,6 +90,16 @@ public class SearchFragment extends Fragment {
         });
 
         return view;
+    }
+
+    private void populateSearchedStocks() {
+        // different implementation necessary after API integration
+        searchedStocks.add(new StockAdapterItem("AAPL", "Apple", "$208.42", "+2.4%"));
+        searchedStocks.add(new StockAdapterItem("AMZN", "Amazon", "$1232.32", "-0.4%"));
+        searchedStocks.add(new StockAdapterItem("GOOG", "Google", "$485.25", "-8.5%"));
+        searchedStocks.add(new StockAdapterItem("SNAP", "Snapchat", "$28.53", "+5.4%"));
+        searchedStocks.add(new StockAdapterItem("WALL", "Walmart", "$99.01", "-0.8%"));
+        searchedStocks.add(new StockAdapterItem("REBK", "Reebok", "$42.69", "+1.5%"));
     }
 
     private void hideKeyboard(View view) {
