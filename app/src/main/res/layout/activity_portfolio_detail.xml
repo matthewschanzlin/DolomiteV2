@@ -45,12 +45,14 @@
                 android:id="@+id/singlePortfolioTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:maxLength="22"
+                android:maxLength="10"
                 android:ellipsize="marquee"
                 android:layout_centerInParent="true"
                 android:fontFamily="sans-serif"
                 android:text="@string/portfolios_title"
                 android:textColor="@color/lightLilac"
+                android:minWidth="100dp"
+                android:minHeight="15dp"
                 android:textSize="25dp" />
 
             <EditText
@@ -105,7 +107,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0.125"
                 android:minWidth="0dp"
-                android:background="@color/lightLilac"
+                android:background="@drawable/timeframe_button_selected"
+                android:textColor="@color/lightLilac"
                 android:text="1d" />
 
             <Button

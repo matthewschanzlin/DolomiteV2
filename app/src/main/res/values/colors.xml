@@ -9,4 +9,5 @@
     <color name="twilightBlue">#101531</color>
     <color name="twilightBlueEnd">#100D29</color>
     <color name="lightGrey">#7C7C8B</color>
+    <color name="black">#000000</color>
 </resources>

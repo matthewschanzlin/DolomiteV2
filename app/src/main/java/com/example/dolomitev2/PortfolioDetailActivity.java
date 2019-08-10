@@ -82,6 +82,7 @@ public class PortfolioDetailActivity extends AppCompatActivity {
         onAddStockClicked();
         nameChangeListener();
         portfolioEditListener();
+        myStocksButtonListener();
 
         //Populate Stocks
         populateStocks();
@@ -142,7 +143,7 @@ public class PortfolioDetailActivity extends AppCompatActivity {
                     view.setBackgroundResource(R.drawable.timeframe_button_selected);
                     ((Button)view).setTextColor(getResources().getColor(R.color.lightLilac, getTheme()));
                     selectedTimeFrameButton.setBackgroundColor(getResources().getColor(R.color.lightLilac, getTheme()));
-                    selectedTimeFrameButton.setTextColor(getResources().getColor(R.color.midnightBlue, getTheme()));
+                    selectedTimeFrameButton.setTextColor(getResources().getColor(R.color.black, getTheme()));
                     selectedTimeFrameButton = (Button)view;
                 }
             });
@@ -150,8 +151,26 @@ public class PortfolioDetailActivity extends AppCompatActivity {
 
     }
 
-    void unselectTimeFrameButton(Button timeFrameButton) {
-        timeFrameButton.setBackgroundResource(R.color.lightLilac);
+    /**
+     * Switches styles of top buttons to indicate viewing MY STOCKS // ADD STOCKS
+     * when inSearchMode is changed
+     * NOTE: should be called AFTER inSearch
+     */
+    void switchSearchUI() {
+        if (inSearch) {
+            // deselect My Stocks button (Edit button), select Search button
+            singlePortfolioEditButton.setBackgroundResource(R.drawable.edit_button_unfocused);
+            singlePortfolioEditButton.setTextColor(getResources().getColor(R.color.midnightBlue, getTheme()));
+            searchButton.setBackgroundResource(R.drawable.edit_button_focused);
+            searchButton.setTextColor(getResources().getColor(R.color.lightLilac, getTheme()));
+        }
+        else {
+            // select My Stocks button (Edit button), deselect Search button
+            singlePortfolioEditButton.setBackgroundResource(R.drawable.edit_button_focused);
+            singlePortfolioEditButton.setTextColor(getResources().getColor(R.color.lightLilac, getTheme()));
+            searchButton.setBackgroundResource(R.drawable.edit_button_unfocused);
+            searchButton.setTextColor(getResources().getColor(R.color.midnightBlue, getTheme()));
+        }
     }
 
     /**
@@ -178,6 +197,7 @@ public class PortfolioDetailActivity extends AppCompatActivity {
 
             Fragment searchFragment = getSupportFragmentManager().findFragmentById(R.id.SearchContainer);
             inSearch = false;
+            switchSearchUI();
 
 
             if (searchFragment != null) {
@@ -266,6 +286,20 @@ public class PortfolioDetailActivity extends AppCompatActivity {
     }
 
     /**
+     * Switches out of search mode if possible.
+     */
+    void myStocksButtonListener() {
+        singlePortfolioEditButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (inSearch) {
+                    onBackPressed();
+                }
+            }
+        });
+    }
+
+    /**
      * This populates the PortfolioDetailView with the correct information.
      */
     private void populatePortfolio() {
@@ -276,7 +310,7 @@ public class PortfolioDetailActivity extends AppCompatActivity {
     }
 
     /**
-     * The stocklist view dissapears and the search fragment view appears with our custom animation.
+     * The stocklist view disappears and the search fragment view appears with our custom animation.
      * boolean logic was added so that you cannot re-enter the search fragment once you're in searchmode.
      */
     private void onAddStockClicked() {
@@ -304,6 +338,7 @@ public class PortfolioDetailActivity extends AppCompatActivity {
 
                     fragmentTransaction.commit();
                     inSearch = true;
+                    switchSearchUI();
 
                 }
 
