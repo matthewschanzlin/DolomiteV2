@@ -381,4 +381,6 @@ public class PortfolioDetailActivity extends AppCompatActivity {
         });
 
     }
+
+
 }
