@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -23,6 +24,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,27 +39,61 @@ import utils.StockAdapterItem;
 public class PortfolioDetailActivity extends AppCompatActivity {
 
     Button button1d, button5d, button1m, button3m, button6m, button1y, button5y, buttonAll,
-            singlePortfolioEditButton, searchButton;
+            singlePortfolioEditButton, searchButton, editButtonPencil;
     String portfolioName;
-    int portfolioId;
+
+    //View Components
     TextView singlePortfolioTitle;
     ListView stockList;
-    ArrayList<StockAdapterItem> stocks;
-    CustomStockAdapter customStockAdapter;
-    FrameLayout SearchContainer;
-    LinearLayout LinearSearchContainer;
-    boolean inSearch;
-    Button editButtonPencil;
     EditText titleEdit;
 
+    //Adapter
+    ArrayList<StockAdapterItem> stocks;
+    CustomStockAdapter customStockAdapter;
+
+    //Containers
+    RelativeLayout relativeLayout;
+    FrameLayout SearchContainer;
+    LinearLayout LinearSearchContainer;
+
+    //Database
     AppDatabase db;
     AdminDAO dao;
+
+    int portfolioId;
+    boolean inSearch;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_portfolio_detail);
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+
+        //Initializing View
+        initData();
+        populatePortfolio();
+
+        //Listeners
+        onAddStockClicked();
+        nameChangeListener();
+        portfolioEditListener();
+
+        //Populate Stocks
+        populateStocks();
+
+        //Set Custom Adapter
+        setAdapter();
+
+        //Keep the view stable when soft keyboard is launched
+        stableKeyBoardViews();
+    }
+
+    /**
+     * This method declares all of our data. Created to minimize confusion / clean up our onCreate.
+     */
+    private void initData() {
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         button1d = findViewById(R.id.button1d);
         button5d = findViewById(R.id.button5d);
@@ -74,6 +110,9 @@ public class PortfolioDetailActivity extends AppCompatActivity {
         searchButton = findViewById(R.id.singlePortfolioSearchButton);
         editButtonPencil = findViewById(R.id.editButtonPencil);
         titleEdit = findViewById(R.id.singlePortfolioTitleEdit);
+        relativeLayout = findViewById(R.id.listViewHolder);
+        stockList = findViewById(R.id.singlePortfolioListView);
+        stocks = new ArrayList<>();
 
 
         db = Room.databaseBuilder(getApplicationContext(),
@@ -82,57 +121,12 @@ public class PortfolioDetailActivity extends AppCompatActivity {
         dao = db.userDao();
 
 
-        searchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-
-                LinearSearchContainer.setVisibility(View.VISIBLE);
-                inSearch = true;
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.setCustomAnimations(R.anim.slide_in_up, R.anim.slide_out_up,
-                        R.anim.slide_in_up, R.anim.slide_out_up);
-                fragmentTransaction.replace(R.id.SearchContainer, new SearchFragment());
-
-                fragmentTransaction.commit();
-            }
-        });
-
-
-        portfolioName = getIntent().getStringExtra("Portfolio name");
-        portfolioId = getIntent().getIntExtra("Portfolio id", -1);
-        singlePortfolioTitle.setText(portfolioName);
-
-        singlePortfolioEditButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-
-            }
-        });
-
-
-        stockList = findViewById(R.id.singlePortfolioListView);
-
-        stocks = new ArrayList<>();
-        populateStocks();
-        customStockAdapter = new CustomStockAdapter(this, stocks);
-        stockList.setAdapter(customStockAdapter);
-        nameChangeListener();
-        portfolioEditListener();
-        titleEdit.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus) {
-                    hideKeyboard(v);
-                }
-            }
-        });
     }
 
 
+    /**
+     * This method populates our PortfolioDetail with the stocks for a given portfolio.
+     */
     private void populateStocks() {
         stocks.add(new StockAdapterItem("AAPL", "Apple", "$208.42", "+2.4%"));
         stocks.add(new StockAdapterItem("AMZN", "Amazon", "$1232.32", "-0.4%"));
@@ -142,6 +136,12 @@ public class PortfolioDetailActivity extends AppCompatActivity {
         stocks.add(new StockAdapterItem("REBK", "Reebok", "$42.69", "+1.5%"));
     }
 
+    /**
+     * This method overrides OnBackPressed so that if in the Search Fragment, the backPress waits for
+     * our animation to complete, and then sets the Fragment Container visibilty to gone so that
+     * the stock list is visible again. When not in the Search View, the back button takes you back
+     * to the launch page (portfolios screen).
+     */
     @Override
     public void onBackPressed() {
         if (inSearch) {
@@ -150,12 +150,9 @@ public class PortfolioDetailActivity extends AppCompatActivity {
             inSearch = false;
 
 
-          //  fragmentTransaction.setCustomAnimations(R.animator.slide_up, R.animator.slide_down);
-
-
             if (searchFragment != null) {
-                Animation animation = AnimationUtils.loadAnimation(searchFragment.getActivity(), R.anim.slide_out_up);
-                animation.setDuration(getResources().getInteger(android.R.integer.config_shortAnimTime));
+                Animation animation = AnimationUtils.loadAnimation(searchFragment.getActivity(), R.anim.slide_down_stock);
+                animation.setDuration(getResources().getInteger(android.R.integer.config_longAnimTime));
 
                 animation.setAnimationListener(new Animation.AnimationListener() {
                     @Override
@@ -168,8 +165,7 @@ public class PortfolioDetailActivity extends AppCompatActivity {
                         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.remove(getSupportFragmentManager().findFragmentById(R.id.SearchContainer)).commit();
                         LinearSearchContainer.setVisibility(View.GONE);
-
-
+                        relativeLayout.setVisibility(View.VISIBLE);
 
                     }
 
@@ -182,15 +178,16 @@ public class PortfolioDetailActivity extends AppCompatActivity {
                 searchFragment.getView().startAnimation(animation);
             }
 
-
-
-
         } else {
             Intent intent = new Intent(PortfolioDetailActivity.this, PortfoliosActivity.class);
             startActivity(intent);
         }
     }
 
+    /**
+     * This method sets the Portfolio Name to an edit text with the text of the portfolio name,
+     * and brings the keyboard up.
+     */
     void nameChangeListener() {
         editButtonPencil.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -208,6 +205,12 @@ public class PortfolioDetailActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * This method deals with the edit text. So when the user changes the name in the edit text
+     * and completes his entry (presses enter) the text from the edit text is grabbed, fed to the
+     * old portfolio Name, and that Name is updated in the database as well.
+     * The edittext view is set to GONE, and the textView is visible again.
+     */
     void portfolioEditListener() {
 
         titleEdit.setOnKeyListener(new View.OnKeyListener() {
@@ -232,8 +235,85 @@ public class PortfolioDetailActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * This populates the PortfolioDetailView with the correct information.
+     */
+    private void populatePortfolio() {
+        portfolioName = getIntent().getStringExtra("Portfolio name");
+        portfolioId = getIntent().getIntExtra("Portfolio id", -1);
+        singlePortfolioTitle.setText(portfolioName);
+
+    }
+
+    /**
+     * The stocklist view dissapears and the search fragment view appears with our custom animation.
+     * boolean logic was added so that you cannot re-enter the search fragment once you're in searchmode.
+     */
+    private void onAddStockClicked() {
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+
+                if (inSearch) {
+
+                } else {
+                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.setCustomAnimations(R.anim.slide_in_up, R.anim.slide_out_up,
+                            R.anim.slide_in_up, R.anim.slide_out_up);
+                    // for add stock
+
+
+                    relativeLayout.setVisibility(View.GONE);
+                    LinearSearchContainer.setVisibility(View.VISIBLE);
+
+                    fragmentTransaction.replace(R.id.SearchContainer, new SearchFragment());
+
+                    fragmentTransaction.commit();
+                    inSearch = true;
+
+                }
+
+
+
+
+            }
+        });
+
+
+    }
+
+    /**
+     * set the adapter for the stock list
+     */
+    private void setAdapter() {
+        customStockAdapter = new CustomStockAdapter(this, stocks);
+        stockList.setAdapter(customStockAdapter);
+    }
+
+    /**
+     * hide the keyBoard a user presses enter on the edit text.
+     */
     public void hideKeyboard(View view) {
         InputMethodManager inputMethodManager = (InputMethodManager) this.getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    /**
+     * this prevents the view from shifting up when the soft keyboard is launched.
+     */
+    private void stableKeyBoardViews() {
+        titleEdit.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    hideKeyboard(v);
+                }
+            }
+        });
+
     }
 }
