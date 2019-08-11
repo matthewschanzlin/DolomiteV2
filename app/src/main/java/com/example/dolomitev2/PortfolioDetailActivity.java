@@ -130,6 +130,9 @@ public class PortfolioDetailActivity extends AppCompatActivity {
             timeFrameButtons[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    if (view.equals(selectedTimeFrameButton)) {
+                        return;
+                    }
                     switch(view.getTag(view.getId()).toString()) {
                         case "0":
                         case "1":
