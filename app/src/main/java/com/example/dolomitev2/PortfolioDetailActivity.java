@@ -236,17 +236,13 @@ public class PortfolioDetailActivity extends AppCompatActivity implements AsyncT
      * This method populates our PortfolioDetail with the stocks for a given portfolio.
      */
     private void populateStocks() {
-        stocks.add(new StockAdapterItem("AAPL", "Apple", (float)208.42, (float)2.4, -1));
+        //stocks.add(new StockAdapterItem("AAPL", "Apple", (float)208.42, (float)2.4, -1));
         Stock[] loadedStocks = dao.loadStockByPortfolioId(portfolioId);
         for (int i = 0; i<loadedStocks.length; i++) {
             if (loadedStocks[i].sold_datetime == null) {
-                stocks.add(new StockAdapterItem(loadedStocks[i].ticker, "TEST",(float)15,(float)1, loadedStocks[i].stock_id));
+                stocks.add(new StockAdapterItem(loadedStocks[i].ticker, "TEST", (float) 15, (float) 1, loadedStocks[i].stock_id));
             }
         }
-        //stocks.add(new StockAdapterItem("AMZN", "Amazon", "$1232.32", "-0.4%"));
-        //stocks.add(new StockAdapterItem("GOOG", "Google", "$485.25", "-8.5%"));
-        //stocks.add(new StockAdapterItem("SNAP", "Snapchat", "$28.53", "+5.4%"));
-        //stocks.add(new StockAdapterItem("WMT", "Walmart", "$99.01", "-0.8%"));
     }
 
     /**
@@ -452,7 +448,7 @@ public class PortfolioDetailActivity extends AppCompatActivity implements AsyncT
      * @param result
      */
     @Override
-    public void OnComplete(ArrayList<PointF> result) {
+    public void OnPointsComplete(ArrayList<PointF> result) {
         newPoints = pointsManager.combinePoints(result, points);
         points.removeAll(points);
         for (PointF point : newPoints) {
@@ -466,6 +462,15 @@ public class PortfolioDetailActivity extends AppCompatActivity implements AsyncT
         }
     }
 
+    public void OnSearchComplete(ArrayList<String> result) {
+
+    }
+
+    public void OnPriceComplete(ArrayList<String> result) {
+
+    }
+
+
     /**
      * Starts process for drawing a graph
      * @param timeframe, 1d, 1mm, etc.
@@ -474,6 +479,7 @@ public class PortfolioDetailActivity extends AppCompatActivity implements AsyncT
         selectedTimeFrame = timeframe;
         graphViewContainer.removeAllViews();
         points.removeAll(points);
+        newPoints.removeAll(newPoints);
         counter = 0;
         manager.getHistoricalPortfolioData(timeframe, stocks);
     }

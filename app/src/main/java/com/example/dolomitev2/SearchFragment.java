@@ -5,11 +5,13 @@ import android.animation.AnimatorInflater;
 import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.PointF;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.JsonReader;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -23,18 +25,30 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
+import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.Dictionary;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
+import utils.ApiManager;
+import utils.AsyncTaskComplete;
 import utils.CustomStockAdapter;
 import utils.StockAdapterItem;
 import utils.stock_search_adapter_item;
 import utils.CustomStockSearchAdapter;
 
-public class SearchFragment extends Fragment {
+public class SearchFragment extends Fragment implements AsyncTaskComplete {
     LinearLayout LinearSearchContainer;
     ListView stockList;
     EditText searchBar;
     String searchTerm;
+    ApiManager manager;
+    HashMap<String, String> searchPrices;
+    int limit;
 
     ArrayList<stock_search_adapter_item> searchedStocks;
     CustomStockSearchAdapter searchedCustomStockAdapter;
@@ -52,6 +66,9 @@ public class SearchFragment extends Fragment {
         LinearSearchContainer = view.findViewById(R.id.LinearSearchContainer);
         searchBar = view.findViewById(R.id.searchSearchBar);
         stockList = view.findViewById(R.id.searchStockList);
+        manager = new ApiManager(getContext(), this);
+        searchPrices = new HashMap<>();
+        limit = 0;
 
         searchedStocks = new ArrayList<>();
         searchedCustomStockAdapter = new CustomStockSearchAdapter(getContext(), searchedStocks);
@@ -63,10 +80,11 @@ public class SearchFragment extends Fragment {
                 if ((keyEvent.getAction() == KeyEvent.ACTION_DOWN) &&
                         (i == KeyEvent.KEYCODE_ENTER)) {
                     searchTerm = searchBar.getText().toString();
-                    Log.d("searchTerm", searchTerm);
+
                     hideKeyboard(view);
-                    populateSearchedStocks();
-                    searchedCustomStockAdapter.notifyDataSetChanged();
+                    limit = 0;
+                    searchPrices.clear();
+                    search(searchTerm);
                     return true;
                 }
                 return false;
@@ -93,18 +111,52 @@ public class SearchFragment extends Fragment {
         return view;
     }
 
-    /**
-     * test data
-     */
-    private void populateSearchedStocks() {
+    private void search(String searchTerm) {
+        manager.getSearchResults(searchTerm);
+    }
 
-        // different implementation necessary after API integration
-        searchedStocks.add(new stock_search_adapter_item("AAPL", "Apple", (float)208.42, (float)2.4));
-        searchedStocks.add(new stock_search_adapter_item("AMZN", "Amazon", (float)1232.32, (float)-0.4));
-        searchedStocks.add(new stock_search_adapter_item("GOOG", "Google", (float)485.25, (float)-8.5));
-        searchedStocks.add(new stock_search_adapter_item("SNAP", "Snapchat", (float)28.53, (float)5.4));
-        searchedStocks.add(new stock_search_adapter_item("WALL", "Walmart", (float)99.01, (float)-0.8));
-        searchedStocks.add(new stock_search_adapter_item("REBK", "Reebok", (float)42.69, (float)1.5));
+    public void OnSearchComplete(ArrayList<String> results) {
+        for (int i = 0; i < results.size(); i++) {
+            if (i % 2 == 0) {
+                searchPrices.put(results.get(i), "0");
+            }
+        }
+        getPrices(results);
+    }
+
+    public void OnPointsComplete(ArrayList<PointF> results) {
+
+    }
+
+    public void OnPriceComplete(ArrayList<String> result) {
+        for (int i = 0; i < result.size(); i++) {
+            if (i % 2 == 0) {
+                searchPrices.put(result.get(i), result.get(i + 1));
+            }
+        }
+        populateSearchedStocks(searchPrices);
+    }
+
+    public void getPrices(ArrayList<String> results) {
+        ArrayList<String> symbols = new ArrayList<>();
+        for (int i = 0; i < results.size(); i++) {
+            if (i % 2 == 0) {
+                symbols.add(results.get(i));
+            }
+        }
+        manager.getPrices(symbols);
+    }
+
+    private void populateSearchedStocks(Map mp) {
+
+        Iterator it = mp.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            searchedStocks.add(new stock_search_adapter_item(pair.getKey().toString(), "Company", new Float(pair.getValue().toString()), (float)2.4));
+            it.remove(); // avoids a ConcurrentModificationException
+        }
+
+        searchedCustomStockAdapter.notifyDataSetChanged();
     }
 
     /**
