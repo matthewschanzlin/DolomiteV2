@@ -2,14 +2,18 @@ package utils;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.room.Room;
 
+import com.daimajia.swipe.SimpleSwipeListener;
 import com.daimajia.swipe.SwipeLayout;
 import com.example.dolomitev2.PortfolioDetailActivity;
 import com.example.dolomitev2.R;
@@ -93,6 +97,44 @@ public class CustomStockAdapter extends BaseAdapter {
             viewHolder.swipeLayout .setShowMode(SwipeLayout.ShowMode.PullOut);
             viewHolder.swipeLayout.addDrag(SwipeLayout.DragEdge.Right,
                     viewHolder.swipeLayout.findViewById(R.id.DELETEBUTTONContainer));
+
+
+            viewHolder.swipeLayout.addSwipeListener(new SwipeLayout.SwipeListener() {
+                @Override
+                public void onStartOpen(SwipeLayout layout) {
+
+                }
+
+                @Override
+                public void onOpen(SwipeLayout layout) {
+
+
+
+                }
+
+                @Override
+                public void onStartClose(SwipeLayout layout) {
+
+                }
+
+                @Override
+                public void onClose(SwipeLayout layout) {
+
+                }
+
+                @Override
+                public void onUpdate(SwipeLayout layout, int leftOffset, int topOffset) {
+
+
+                }
+
+                @Override
+                public void onHandRelease(SwipeLayout layout, float xvel, float yvel) {
+
+
+
+                }
+            });
 
 
 
