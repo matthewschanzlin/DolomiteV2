@@ -99,12 +99,12 @@ public class SearchFragment extends Fragment {
     private void populateSearchedStocks() {
 
         // different implementation necessary after API integration
-        searchedStocks.add(new stock_search_adapter_item("AAPL", "Apple", "$208.42", "+2.4%"));
-        searchedStocks.add(new stock_search_adapter_item("AMZN", "Amazon", "$1232.32", "-0.4%"));
-        searchedStocks.add(new stock_search_adapter_item("GOOG", "Google", "$485.25", "-8.5%"));
-        searchedStocks.add(new stock_search_adapter_item("SNAP", "Snapchat", "$28.53", "+5.4%"));
-        searchedStocks.add(new stock_search_adapter_item("WALL", "Walmart", "$99.01", "-0.8%"));
-        searchedStocks.add(new stock_search_adapter_item("REBK", "Reebok", "$42.69", "+1.5%"));
+        searchedStocks.add(new stock_search_adapter_item("AAPL", "Apple", (float)208.42, (float)2.4));
+        searchedStocks.add(new stock_search_adapter_item("AMZN", "Amazon", (float)1232.32, (float)-0.4));
+        searchedStocks.add(new stock_search_adapter_item("GOOG", "Google", (float)485.25, (float)-8.5));
+        searchedStocks.add(new stock_search_adapter_item("SNAP", "Snapchat", (float)28.53, (float)5.4));
+        searchedStocks.add(new stock_search_adapter_item("WALL", "Walmart", (float)99.01, (float)-0.8));
+        searchedStocks.add(new stock_search_adapter_item("REBK", "Reebok", (float)42.69, (float)1.5));
     }
 
     /**

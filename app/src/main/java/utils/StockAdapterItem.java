@@ -2,6 +2,8 @@ package utils;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.Locale;
+
 /**
  * Adapter item assoc. with CustomStockAdapter
  */
@@ -9,11 +11,11 @@ public class StockAdapterItem extends AppCompatActivity {
 
     String ticker;
     String companyName;
-    String value;
-    String upDown;
+    float value;
+    float upDown;
     int stockId;
 
-    public StockAdapterItem(String ticker, String companyName, String value, String upDown, int stockId) {
+    public StockAdapterItem(String ticker, String companyName, float value, float upDown, int stockId) {
         this.ticker = ticker;
         this.companyName = companyName;
         this.value = value;
@@ -29,9 +31,20 @@ public class StockAdapterItem extends AppCompatActivity {
         return companyName;
     }
 
-    public String getValue () { return value; }
+    public float getValue () { return value; }
 
-    public String getUpDown () { return upDown; }
+    public String getValueText() {
+        return "$" + String.format(Locale.US, "%.2f",value);
+    }
+
+    public float getUpDown () { return upDown; }
+
+    public String getUpDownText() {
+        if (upDown > 0) {
+            return "+" + String.format(Locale.US, "%.2f",upDown);
+        }
+        return "-" + String.format(Locale.US, "%.2f",upDown);
+    }
 
     public int getStockId() {
         return stockId;

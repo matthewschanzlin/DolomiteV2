@@ -104,8 +104,8 @@ public class CustomStockAdapter extends BaseAdapter {
 
         viewHolder.ticker.setText(stocks.get(i).getTicker());
         viewHolder.companyName.setText(stocks.get(i).getCompanyName());
-        viewHolder.value.setText(stocks.get(i).getValue());
-        viewHolder.upDown.setText(stocks.get(i).getUpDown());
+        viewHolder.value.setText(stocks.get(i).getValueText());
+        viewHolder.upDown.setText(stocks.get(i).getUpDownText());
 
         if (((viewHolder.upDown.getText()).toString().substring(0,1)).equals("+")) {
             viewHolder.upDown.setTextColor(Color.GREEN);
