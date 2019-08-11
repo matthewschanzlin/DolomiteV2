@@ -8,6 +8,10 @@ import com.example.dolomitev2.R;
 
 public class stock_search_adapter_item extends AppCompatActivity {
 
+    public stock_search_adapter_item() {
+
+    }
+
     public String getCompanyName() {
         return companyName;
     }

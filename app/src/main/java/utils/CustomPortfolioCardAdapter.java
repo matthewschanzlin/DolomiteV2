@@ -76,7 +76,7 @@ public class CustomPortfolioCardAdapter extends BaseAdapter {
         viewHolder.name.setText(portfolios.get(i).getName());
         viewHolder.percentChange.setText(portfolios.get(i).getPercentChange());
         viewHolder.value.setText(portfolios.get(i).getValue());
-        DrawView chartView = new DrawView(context, portfolios.get(i).getChart());
+        GraphView chartView = new GraphView(context, portfolios.get(i).getChart(), new ViewDimension((float)396.00, (float)171.0));
         viewHolder.chart.addView(chartView);
         if (editmode && i!=0) {
             if (portfolios.get(i).getDeleteMode()) {

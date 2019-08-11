@@ -11,7 +11,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.PointF;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -34,10 +37,15 @@ import java.util.ArrayList;
 import entities.AdminDAO;
 import entities.AppDatabase;
 import entities.Portfolio;
+import utils.ApiManager;
+import utils.AsyncTaskComplete;
 import utils.CustomStockAdapter;
+import utils.DataPointsManager;
+import utils.GraphView;
 import utils.StockAdapterItem;
+import utils.ViewDimension;
 
-public class PortfolioDetailActivity extends AppCompatActivity {
+public class PortfolioDetailActivity extends AppCompatActivity implements AsyncTaskComplete {
 
 
     Button singlePortfolioEditButton, searchButton;
@@ -56,6 +64,7 @@ public class PortfolioDetailActivity extends AppCompatActivity {
 
     //Containers
     RelativeLayout relativeLayout;
+    RelativeLayout graphViewContainer;
     FrameLayout SearchContainer;
     LinearLayout LinearSearchContainer;
 
@@ -66,6 +75,13 @@ public class PortfolioDetailActivity extends AppCompatActivity {
     int portfolioId;
     boolean inSearch;
 
+    ArrayList<PointF> points;
+    ArrayList<PointF> newPoints;
+    DataPointsManager pointsManager;
+    int counter;
+    ApiManager manager;
+    ViewDimension dim;
+    Context context;
 
 
     @Override
@@ -105,6 +121,19 @@ public class PortfolioDetailActivity extends AppCompatActivity {
      */
     private void initData() {
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
+        context = getApplicationContext();
+        points = new ArrayList<>();
+        newPoints = new ArrayList<>();
+        counter = 0;
+        manager = new ApiManager(context, this);
+        pointsManager = new DataPointsManager();
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        this.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        final Float h = (float)((float)displayMetrics.heightPixels*0.25);
+        final Float w = (float)displayMetrics.widthPixels;
+        dim = new ViewDimension(w,h);
+
         timeFrameButtons = new Button[8];
         timeFrameButtons[0] = findViewById(R.id.button1d);
         timeFrameButtons[1] = findViewById(R.id.button5d);
@@ -123,6 +152,7 @@ public class PortfolioDetailActivity extends AppCompatActivity {
         titleEdit = findViewById(R.id.singlePortfolioTitleEdit);
         relativeLayout = findViewById(R.id.listViewHolder);
         stockList = findViewById(R.id.singlePortfolioListView);
+        graphViewContainer = findViewById(R.id.LineGraph);
         stocks = new ArrayList<>();
 
         for (int i = 0; i<timeFrameButtons.length; i++) {
@@ -184,8 +214,7 @@ public class PortfolioDetailActivity extends AppCompatActivity {
         stocks.add(new StockAdapterItem("AMZN", "Amazon", "$1232.32", "-0.4%"));
         stocks.add(new StockAdapterItem("GOOG", "Google", "$485.25", "-8.5%"));
         stocks.add(new StockAdapterItem("SNAP", "Snapchat", "$28.53", "+5.4%"));
-        stocks.add(new StockAdapterItem("WALL", "Walmart", "$99.01", "-0.8%"));
-        stocks.add(new StockAdapterItem("REBK", "Reebok", "$42.69", "+1.5%"));
+        stocks.add(new StockAdapterItem("WMT", "Walmart", "$99.01", "-0.8%"));
     }
 
     /**
@@ -386,4 +415,23 @@ public class PortfolioDetailActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void OnComplete(ArrayList<PointF> result) {
+        newPoints = pointsManager.combinePoints(result, points);
+        points.removeAll(points);
+        for (PointF point : newPoints) {
+            points.add(point);
+        }
+        counter++;
+        if (counter == stocks.size()) {
+            Log.d("debugging",""+points.size());
+            GraphView graph = new GraphView(context, points, dim);
+            graphViewContainer.addView(graph);
+        }
+    }
+
+    private void drawGraph(String timeframe) {
+        counter = 0;
+        manager.getHistoricalPortfolioData(timeframe, stocks);
+    }
 }
