@@ -29,12 +29,16 @@ import java.util.ArrayList;
 public class ApiManager {
     Context context;
     ArrayList<PointF> dataPoints;
+    ArrayList<String> searchResults;
     AsyncTaskComplete listener;
+    RequestQueue queue;
 
     public ApiManager(Context context, AsyncTaskComplete listener) {
         this.context = context;
         this.listener = listener;
         dataPoints = new ArrayList<>();
+        searchResults = new ArrayList<>();
+        queue = Volley.newRequestQueue(context);
     }
 
     /**
@@ -43,7 +47,7 @@ public class ApiManager {
      * @param ticker
      */
     public void getHistoricalStockData(final String timeframe, final String ticker) {
-
+        dataPoints.removeAll(dataPoints);
         final String url = "https://cloud.iexapis.com/stable/stock/" + ticker + "/chart/" + timeframe + "?token=pk_ef064cdb978c441586aec2daa723c376";
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
                 Request.Method.GET,
@@ -53,7 +57,6 @@ public class ApiManager {
                     @Override
                     public void onResponse(JSONArray response) {
                         try{
-                            dataPoints.removeAll(dataPoints);
                             for(int i=0; i < response.length(); i++){
                                 JSONObject stockPrice = response.getJSONObject(i);
                                 float price;
@@ -68,19 +71,17 @@ public class ApiManager {
                             e.printStackTrace();
                         }
                         String s = new Integer(dataPoints.size()).toString();
-                        listener.OnComplete(dataPoints);
+                        listener.OnPointsComplete(dataPoints);
                     }
                 },
                 new Response.ErrorListener(){
                     @Override
                     public void onErrorResponse(VolleyError error){
-                        //Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
                         Log.d("debugging", "apimanager");
                     }
                 }
         );
         // add it to the RequestQueue
-        RequestQueue queue = Volley.newRequestQueue(context);
         queue.add(jsonArrayRequest);
 
     }
@@ -94,6 +95,71 @@ public class ApiManager {
         for (StockAdapterItem s: stocks) {
             getHistoricalStockData(timeframe, s.getTicker());
         }
+    }
 
+    public void getPrices(ArrayList<String> symbols) {
+        for (int i = 0; i < symbols.size(); i++) {
+            if (i % 2 == 0) {
+                getPrice(symbols.get(i));
+            }
+        }
+    }
+
+    public void getPrice(final String symbol) {
+        final String url = "https://cloud.iexapis.com/stable/stock/"+symbol+"/price?token=pk_ef064cdb978c441586aec2daa723c376";
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        ArrayList<String> result = new ArrayList<>();
+                        result.add(symbol);
+                        result.add(response);
+                        listener.OnPriceComplete(result);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(context, "ERROR GETTING PRICE", Toast.LENGTH_SHORT).show();
+                    }
+        });
+
+        queue.add(stringRequest);
+
+    }
+
+    public void getSearchResults(final String searchTerm) {
+        searchResults.removeAll(searchResults);
+        final String url = "https://cloud.iexapis.com/stable/search/" + searchTerm + "?token=pk_ef064cdb978c441586aec2daa723c376";
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
+                Request.Method.GET,
+                url,
+                null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        try{
+                            for (int i = 0; i < response.length(); i++) {
+                                JSONObject obj = response.getJSONObject(i);
+                                String symbol = obj.getString("symbol");
+                                String securityName = obj.getString("securityName");
+                                searchResults.add(symbol);
+                                searchResults.add(securityName);
+                            }
+                        }catch (JSONException e){
+                            e.printStackTrace();
+                        }
+                        listener.OnSearchComplete(searchResults);
+                    }
+                },
+                new Response.ErrorListener(){
+                    @Override
+                    public void onErrorResponse(VolleyError error){
+                        Toast.makeText(context, "Search Error, retry", Toast.LENGTH_SHORT).show();
+                    }
+                }
+        );
+        // add it to the RequestQueue
+        queue.add(jsonArrayRequest);
     }
 }
