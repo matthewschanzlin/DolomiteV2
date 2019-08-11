@@ -118,7 +118,8 @@
                 android:layout_weight="0.125"
                 android:minWidth="0dp"
                 android:background="@color/lightLilac"
-                android:text="5d" />
+                android:text="5d"
+                android:visibility="gone"/>
 
             <Button
                 android:id="@+id/button1m"
@@ -172,6 +173,7 @@
                 android:layout_weight="0.125"
                 android:minWidth="0dp"
                 android:background="@color/lightLilac"
+                android:visibility="gone"
                 android:text="All" />
 
         </LinearLayout>

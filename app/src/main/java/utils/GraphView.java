@@ -41,7 +41,7 @@ public class GraphView extends View {
             }
 
             double multiplierX = dimension.width / points.size();
-            double multiplierY = dimension.height / (topY - botY);
+            double multiplierY = dimension.height / (topY  - botY);
 
             for (PointF p: points) {
                 linePoints.add(new PointF((float)(p.x * multiplierX), (float)((topY - p.y) * multiplierY)));

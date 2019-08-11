@@ -135,15 +135,15 @@ public class PortfolioDetailActivity extends AppCompatActivity implements AsyncT
         final Float w = (float)displayMetrics.widthPixels;
         dim = new ViewDimension(w,h);
 
-        timeFrameButtons = new Button[8];
+        timeFrameButtons = new Button[6];
         timeFrameButtons[0] = findViewById(R.id.button1d);
-        timeFrameButtons[1] = findViewById(R.id.button5d);
-        timeFrameButtons[2] = findViewById(R.id.button1m);
-        timeFrameButtons[3] = findViewById(R.id.button3m);
-        timeFrameButtons[4] = findViewById(R.id.button6m);
-        timeFrameButtons[5] = findViewById(R.id.button1y);
-        timeFrameButtons[6] = findViewById(R.id.button5y);
-        timeFrameButtons[7] = findViewById(R.id.buttonAll);
+        //timeFrameButtons[1] = findViewById(R.id.button5d);
+        timeFrameButtons[1] = findViewById(R.id.button1m);
+        timeFrameButtons[2] = findViewById(R.id.button3m);
+        timeFrameButtons[3] = findViewById(R.id.button6m);
+        timeFrameButtons[4] = findViewById(R.id.button1y);
+        timeFrameButtons[5] = findViewById(R.id.button5y);
+        //timeFrameButtons[7] = findViewById(R.id.buttonAll);
         selectedTimeFrameButton = timeFrameButtons[0];
         singlePortfolioEditButton = findViewById(R.id.singlePortfolioEditButton);
         singlePortfolioTitle = findViewById(R.id.singlePortfolioTitle);
@@ -168,19 +168,19 @@ public class PortfolioDetailActivity extends AppCompatActivity implements AsyncT
                         case "0":
                             drawGraph("1d");
                         case "1":
-                            drawGraph("5d");
+                            drawGraph("1mm");
+                            //drawGraph("5d");
                         case "2":
-                            drawGraph("1m");
-                        case "3":
                             drawGraph("3m");
-                        case "4":
+                        case "3":
                             drawGraph("6m");
-                        case "5":
+                        case "4":
                             drawGraph("1y");
-                        case "6":
+                        case "5":
+                        //case "6":
                             drawGraph("5y");
-                        case "7":
-                            drawGraph("All");
+                        //case "7":
+                            //drawGraph("All");
                     }
                     view.setBackgroundResource(R.drawable.timeframe_button_selected);
                     ((Button)view).setTextColor(getResources().getColor(R.color.lightLilac, getTheme()));
@@ -441,6 +441,7 @@ public class PortfolioDetailActivity extends AppCompatActivity implements AsyncT
 
     private void drawGraph(String timeframe) {
         graphViewContainer.removeAllViews();
+        points.removeAll(points);
         counter = 0;
         manager.getHistoricalPortfolioData(timeframe, stocks);
     }
