@@ -6,6 +6,8 @@ import android.os.Bundle;
 
 import com.example.dolomitev2.R;
 
+import java.util.Locale;
+
 /**
  * Adapter item associated w/ CustomStockSearchAdapter
  */
@@ -19,15 +21,26 @@ public class stock_search_adapter_item extends AppCompatActivity {
         return companyName;
     }
 
-    public String getValue() {
+    public float getValue() {
         return value;
     }
 
-    public String getUpDown() {
+    public float getUpDown() {
         return upDown;
     }
 
-    public stock_search_adapter_item(String ticker, String companyName, String value, String upDown) {
+    public String getValueText() {
+        return "$" + String.format(Locale.US, "%.2f",value);
+    }
+
+    public String getUpDownText() {
+        if (upDown > 0) {
+            return "+" + String.format(Locale.US, "%.2f",upDown);
+        }
+        return "-" + String.format(Locale.US, "%.2f",upDown);
+    }
+
+    public stock_search_adapter_item(String ticker, String companyName, float value, float upDown) {
         this.ticker = ticker;
         this.companyName = companyName;
         this.value = value;
@@ -46,18 +59,18 @@ public class stock_search_adapter_item extends AppCompatActivity {
         this.companyName = companyName;
     }
 
-    public void setValue(String value) {
+    public void setValue(float value) {
         this.value = value;
     }
 
-    public void setUpDown(String upDown) {
+    public void setUpDown(float upDown) {
         this.upDown = upDown;
     }
 
     String ticker;
     String companyName;
-    String value;
-    String upDown;
+    float value;
+    float upDown;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
