@@ -23,7 +23,7 @@ public class DataPointsManager {
             combinedList = list1.size() > list2.size() ? list1 : list2;
         } else {
             combinedSize = list1.size() > list2.size() ? list2.size() : list1.size();
-            for (int j = 0; j < 100; j++) {
+            for (int j = 0; j < combinedSize; j++) {
                 combinedY = (list1.get(j).y + list2.get(j).y);
                 combinedList.add(new PointF((float)j, combinedY));
             }

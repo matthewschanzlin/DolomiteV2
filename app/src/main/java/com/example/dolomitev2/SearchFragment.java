@@ -94,6 +94,7 @@ public class SearchFragment extends Fragment {
     }
 
     private void populateSearchedStocks() {
+
         // different implementation necessary after API integration
         searchedStocks.add(new stock_search_adapter_item("AAPL", "Apple", "$208.42", "+2.4%"));
         searchedStocks.add(new stock_search_adapter_item("AMZN", "Amazon", "$1232.32", "-0.4%"));

@@ -35,7 +35,7 @@ public class ApiManager {
         dataPoints = new ArrayList<>();
     }
 
-    public void getHistoricalStockData(String timeframe, final String ticker) {
+    public void getHistoricalStockData(final String timeframe, final String ticker) {
 
         final String url = "https://cloud.iexapis.com/stable/stock/" + ticker + "/chart/" + timeframe + "?token=pk_ef064cdb978c441586aec2daa723c376";
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
@@ -49,7 +49,12 @@ public class ApiManager {
                             dataPoints.removeAll(dataPoints);
                             for(int i=0; i < response.length(); i++){
                                 JSONObject stockPrice = response.getJSONObject(i);
-                                float price = (float)stockPrice.getDouble("marketClose");
+                                float price;
+                                if (timeframe.equals("1d")) {
+                                    price = (float)stockPrice.getDouble("marketClose");
+                                }else {
+                                    price = (float)stockPrice.getDouble("uClose");
+                                }
                                 dataPoints.add(new PointF(i, price));
                             }
                         }catch (JSONException e){
@@ -62,7 +67,8 @@ public class ApiManager {
                 new Response.ErrorListener(){
                     @Override
                     public void onErrorResponse(VolleyError error){
-                        Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Log.d("debugging", "apimanager");
                     }
                 }
         );

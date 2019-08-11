@@ -108,6 +108,7 @@ public class PortfolioDetailActivity extends AppCompatActivity implements AsyncT
 
         //Populate Stocks
         populateStocks();
+        drawGraph("1d");
 
         //Set Custom Adapter
         setAdapter();
@@ -165,13 +166,21 @@ public class PortfolioDetailActivity extends AppCompatActivity implements AsyncT
                     }
                     switch(view.getTag(view.getId()).toString()) {
                         case "0":
+                            drawGraph("1d");
                         case "1":
+                            drawGraph("5d");
                         case "2":
+                            drawGraph("1m");
                         case "3":
+                            drawGraph("3m");
                         case "4":
+                            drawGraph("6m");
                         case "5":
+                            drawGraph("1y");
                         case "6":
+                            drawGraph("5y");
                         case "7":
+                            drawGraph("All");
                     }
                     view.setBackgroundResource(R.drawable.timeframe_button_selected);
                     ((Button)view).setTextColor(getResources().getColor(R.color.lightLilac, getTheme()));
@@ -431,6 +440,7 @@ public class PortfolioDetailActivity extends AppCompatActivity implements AsyncT
     }
 
     private void drawGraph(String timeframe) {
+        graphViewContainer.removeAllViews();
         counter = 0;
         manager.getHistoricalPortfolioData(timeframe, stocks);
     }
