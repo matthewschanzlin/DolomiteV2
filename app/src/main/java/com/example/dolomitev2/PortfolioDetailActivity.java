@@ -179,15 +179,20 @@ public class PortfolioDetailActivity extends AppCompatActivity implements AsyncT
                     switch(view.getTag(view.getId()).toString()) {
                         case "0":
                             drawGraph("1d");
+                            break;
                         case "1":
-                            drawGraph("1mm");
+                            drawGraph("1m");
+                            break;
                             //drawGraph("5d");
                         case "2":
                             drawGraph("3m");
+                            break;
                         case "3":
                             drawGraph("6m");
+                            break;
                         case "4":
                             drawGraph("1y");
+                            break;
                         case "5":
                         //case "6":
                             drawGraph("5y");
