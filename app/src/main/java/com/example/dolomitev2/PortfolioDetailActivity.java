@@ -220,10 +220,10 @@ public class PortfolioDetailActivity extends AppCompatActivity implements AsyncT
      */
     private void populateStocks() {
         stocks.add(new StockAdapterItem("AAPL", "Apple", "$208.42", "+2.4%"));
-        stocks.add(new StockAdapterItem("AMZN", "Amazon", "$1232.32", "-0.4%"));
-        stocks.add(new StockAdapterItem("GOOG", "Google", "$485.25", "-8.5%"));
-        stocks.add(new StockAdapterItem("SNAP", "Snapchat", "$28.53", "+5.4%"));
-        stocks.add(new StockAdapterItem("WMT", "Walmart", "$99.01", "-0.8%"));
+  //      stocks.add(new StockAdapterItem("AMZN", "Amazon", "$1232.32", "-0.4%"));
+    //    stocks.add(new StockAdapterItem("GOOG", "Google", "$485.25", "-8.5%"));
+     //   stocks.add(new StockAdapterItem("SNAP", "Snapchat", "$28.53", "+5.4%"));
+      //  stocks.add(new StockAdapterItem("WMT", "Walmart", "$99.01", "-0.8%"));
     }
 
     /**

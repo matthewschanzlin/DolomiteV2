@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="@drawable/rounded_edittext_states"
-            android:layout_weight="0.075"
+            android:layout_weight="0.1"
             android:layout_margin="1dp"
             android:inputType="textPersonName"
             android:layout_gravity="center"/>
