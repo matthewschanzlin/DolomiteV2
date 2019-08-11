@@ -65,6 +65,20 @@ public class CustomStockSearchAdapter extends BaseAdapter {
             viewHolder.viewPortfolioAffectButton = view.findViewById(R.id.ViewPortfolioButton);
             viewHolder.currentPos = i;
 
+            viewHolder.addStockButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            });
+
+            viewHolder.viewPortfolioAffectButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            });
+
 
             viewHolder.swipeLayout .setShowMode(SwipeLayout.ShowMode.PullOut);
             viewHolder.swipeLayout.addDrag(SwipeLayout.DragEdge.Right,

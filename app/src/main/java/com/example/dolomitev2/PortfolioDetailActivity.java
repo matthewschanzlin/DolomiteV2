@@ -10,6 +10,7 @@ import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.database.DataSetObserver;
 import android.graphics.Color;
 import android.graphics.PointF;
 import android.os.Bundle;
@@ -37,6 +38,7 @@ import java.util.ArrayList;
 import entities.AdminDAO;
 import entities.AppDatabase;
 import entities.Portfolio;
+import entities.Stock;
 import utils.ApiManager;
 import utils.AsyncTaskComplete;
 import utils.CustomStockAdapter;
@@ -51,6 +53,7 @@ public class PortfolioDetailActivity extends AppCompatActivity implements AsyncT
     Button singlePortfolioEditButton, searchButton;
     Button[] timeFrameButtons;
     Button selectedTimeFrameButton;
+    String selectedTimeFrame;
     String portfolioName;
 
     //View Components
@@ -115,6 +118,15 @@ public class PortfolioDetailActivity extends AppCompatActivity implements AsyncT
 
         //Keep the view stable when soft keyboard is launched
         stableKeyBoardViews();
+
+        customStockAdapter.registerDataSetObserver(new DataSetObserver() {
+            @Override
+            public void onChanged() {
+                super.onChanged();
+
+                drawGraph(selectedTimeFrame);
+            }
+        });
     }
 
     /**
@@ -219,11 +231,17 @@ public class PortfolioDetailActivity extends AppCompatActivity implements AsyncT
      * This method populates our PortfolioDetail with the stocks for a given portfolio.
      */
     private void populateStocks() {
-        stocks.add(new StockAdapterItem("AAPL", "Apple", "$208.42", "+2.4%"));
-        stocks.add(new StockAdapterItem("AMZN", "Amazon", "$1232.32", "-0.4%"));
-        stocks.add(new StockAdapterItem("GOOG", "Google", "$485.25", "-8.5%"));
-        stocks.add(new StockAdapterItem("SNAP", "Snapchat", "$28.53", "+5.4%"));
-        stocks.add(new StockAdapterItem("WMT", "Walmart", "$99.01", "-0.8%"));
+        stocks.add(new StockAdapterItem("AAPL", "Apple", "$208.42", "+2.4%", -1));
+        Stock[] loadedStocks = dao.loadStockByPortfolioId(portfolioId);
+        for (int i = 0; i<loadedStocks.length; i++) {
+            if (loadedStocks[i].sold_datetime == null) {
+                stocks.add(new StockAdapterItem(loadedStocks[i].ticker, "TEST","15","+", loadedStocks[i].stock_id));
+            }
+        }
+        //stocks.add(new StockAdapterItem("AMZN", "Amazon", "$1232.32", "-0.4%"));
+        //stocks.add(new StockAdapterItem("GOOG", "Google", "$485.25", "-8.5%"));
+        //stocks.add(new StockAdapterItem("SNAP", "Snapchat", "$28.53", "+5.4%"));
+        //stocks.add(new StockAdapterItem("WMT", "Walmart", "$99.01", "-0.8%"));
     }
 
     /**
@@ -396,7 +414,7 @@ public class PortfolioDetailActivity extends AppCompatActivity implements AsyncT
      * set the adapter for the stock list
      */
     private void setAdapter() {
-        customStockAdapter = new CustomStockAdapter(this, stocks);
+        customStockAdapter = new CustomStockAdapter(this, stocks, portfolioId);
         stockList.setAdapter(customStockAdapter);
     }
 
@@ -448,6 +466,7 @@ public class PortfolioDetailActivity extends AppCompatActivity implements AsyncT
      * @param timeframe, 1d, 1mm, etc.
      */
     private void drawGraph(String timeframe) {
+        selectedTimeFrame = timeframe;
         graphViewContainer.removeAllViews();
         points.removeAll(points);
         counter = 0;

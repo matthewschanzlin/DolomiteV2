@@ -8,23 +8,34 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.room.Room;
+
 import com.daimajia.swipe.SwipeLayout;
+import com.example.dolomitev2.PortfolioDetailActivity;
 import com.example.dolomitev2.R;
 
 import java.util.ArrayList;
+
+import entities.AdminDAO;
+import entities.AppDatabase;
 
 /**
  * Adapter for stocks associated with a portfolio
  */
 public class CustomStockAdapter extends BaseAdapter {
 
-    public CustomStockAdapter(Context context, ArrayList<StockAdapterItem> stocks) {
+    public CustomStockAdapter(Context context, ArrayList<StockAdapterItem> stocks, int portfolioId) {
         this.context = context;
         this.stocks = stocks;
+        this.portfolioId = portfolioId;
     }
 
     Context context;
     ArrayList<StockAdapterItem> stocks;
+    int portfolioId;
+
+    AppDatabase db;
+    AdminDAO dao;
 
     @Override
     public int getCount() {
@@ -56,12 +67,23 @@ public class CustomStockAdapter extends BaseAdapter {
             viewHolder.companyName = view.findViewById(R.id.company_name_adapter_item);
             viewHolder.swipeLayout = view.findViewById(R.id.SwipeLayoutId);
             viewHolder.deleteButton = view.findViewById(R.id.DELETEBUTTON);
+            viewHolder.stockId = stocks.get(i).getStockId();
             viewHolder.currentPos = i;
 
             viewHolder.deleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     stocks.remove(viewHolder.currentPos);
+                    // Init database
+                    if (db == null) {
+                        db = Room.databaseBuilder(context,
+                                AppDatabase.class, "database-name").fallbackToDestructiveMigration().allowMainThreadQueries().build();
+                        // NOTE: MIGHT LOCK UP THREAD. SWITCH TO STATIC NESTED CLASS WHEN POSSIBLE
+                        dao = db.userDao();
+                    }
+                    if (viewHolder.stockId != -1) {
+                        dao.deleteStock(dao.loadStockByStockId(viewHolder.stockId));
+                    }
                     notifyDataSetChanged();
                 }
             });
@@ -102,6 +124,7 @@ public class CustomStockAdapter extends BaseAdapter {
         SwipeLayout swipeLayout;
         Button deleteButton;
         int currentPos;
+        int stockId;
 
     }
 }

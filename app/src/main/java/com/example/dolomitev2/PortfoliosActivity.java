@@ -179,7 +179,7 @@ public class PortfoliosActivity extends AppCompatActivity {
                     // Delete
                     for (int i = 1; i < portfolios.size(); i++) {
                         if (portfolios.get(i).getDeleteMode()) {
-                            dao.deletePortfolio(dao.loadPortfolioByPortfolioName(portfolios.get(i).getName())[0]);
+                            dao.deletePortfolio(dao.loadPortfolioByPortfolioId(portfolios.get(i).getId()));
                             portfolios.remove(i);
                             i -= 1;
                         }

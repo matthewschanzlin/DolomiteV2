@@ -21,14 +21,14 @@ public interface AdminDAO {
     @Query("select * from portfolio where Portfolio.portfolio_id = :portfolio_id")
     public Portfolio loadPortfolioByPortfolioId(int portfolio_id);
 
-    @Query("select * from  Stock")
-    public Stock[] loadAllStocks();
-
     @Query("select * from  Portfolio")
     public Portfolio[] loadAllPortfolios();
 
-    @Query("select * from Stock inner join portfolio on stock.portfolio_id = portfolio.portfolio_id where Portfolio.portfolio_name = :portfolio_name")
-    public Stock[] loadStockByPortfolioName(String portfolio_name);
+    @Query("select * from Stock inner join portfolio on stock.portfolio_id = :portfolio_id")
+    public Stock[] loadStockByPortfolioId(int portfolio_id);
+
+    @Query("select * from Stock where stock_id = :stock_id")
+    public Stock loadStockByStockId(int stock_id);
 
     @Delete
     public void deletePortfolio(Portfolio portfolio);
