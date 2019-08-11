@@ -6,10 +6,13 @@ import android.os.Bundle;
 
 import com.example.dolomitev2.R;
 
+/**
+ * Adapter item associated w/ CustomStockSearchAdapter
+ */
 public class stock_search_adapter_item extends AppCompatActivity {
 
     public stock_search_adapter_item() {
-
+        // required empty constructor
     }
 
     public String getCompanyName() {

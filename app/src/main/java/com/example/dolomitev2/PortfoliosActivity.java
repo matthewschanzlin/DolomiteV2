@@ -92,6 +92,10 @@ public class PortfoliosActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * test data
+     * @return
+     */
     ArrayList<PointF> getPoints() {
         ArrayList<PointF> points = new ArrayList<>();
 

@@ -23,7 +23,9 @@ import org.json.JSONObject;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-
+/**
+ * Pulls data from the API (IEX)
+ */
 public class ApiManager {
     Context context;
     ArrayList<PointF> dataPoints;
@@ -35,6 +37,11 @@ public class ApiManager {
         dataPoints = new ArrayList<>();
     }
 
+    /**
+     * Fetches the list of historical datapoints for the given ticker over the given timeframe
+     * @param timeframe
+     * @param ticker
+     */
     public void getHistoricalStockData(final String timeframe, final String ticker) {
 
         final String url = "https://cloud.iexapis.com/stable/stock/" + ticker + "/chart/" + timeframe + "?token=pk_ef064cdb978c441586aec2daa723c376";
@@ -78,6 +85,11 @@ public class ApiManager {
 
     }
 
+    /**
+     * Loops through all the stocks
+     * @param timeframe
+     * @param stocks
+     */
     public void getHistoricalPortfolioData(String timeframe, ArrayList<StockAdapterItem> stocks) {
         for (StockAdapterItem s: stocks) {
             getHistoricalStockData(timeframe, s.getTicker());

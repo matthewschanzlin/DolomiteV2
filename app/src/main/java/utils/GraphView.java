@@ -14,6 +14,9 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+/**
+ * Logic for drawing a line from ArrayList of datapoints.
+ */
 public class GraphView extends View {
 
     Paint paint;
@@ -22,6 +25,12 @@ public class GraphView extends View {
     ViewDimension dimension;
     Context context;
 
+    /**
+     * Includes logic to format datapoints for the given viewframe dimensions.
+     * @param context
+     * @param points
+     * @param dimension
+     */
     public GraphView(Context context, ArrayList<PointF> points, ViewDimension dimension) {
         super(context);
         this.context = context;

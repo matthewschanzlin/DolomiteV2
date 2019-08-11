@@ -8,7 +8,10 @@ import androidx.room.TypeConverter;
 
 import org.threeten.bp.OffsetDateTime;
 
-
+/**
+ * Distinct from StockData, this is a stock that a user has purchased (and possibly sold).
+ * A portfolio can have more than one Stock with the same StockData ticker.
+ */
 @Entity
 public class Stock {
 

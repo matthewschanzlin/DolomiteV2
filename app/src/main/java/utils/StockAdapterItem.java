@@ -2,6 +2,9 @@ package utils;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+/**
+ * Adapter item assoc. with CustomStockAdapter
+ */
 public class StockAdapterItem extends AppCompatActivity {
 
     String ticker;

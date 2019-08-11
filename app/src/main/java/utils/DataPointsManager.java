@@ -5,6 +5,9 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
+/**
+ * Logic for combining lists of datapoints.
+ */
 public class DataPointsManager {
 
     public DataPointsManager() {

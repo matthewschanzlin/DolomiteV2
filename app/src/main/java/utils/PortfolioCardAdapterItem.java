@@ -13,6 +13,9 @@ import com.example.dolomitev2.R;
 
 import java.util.ArrayList;
 
+/**
+ * AdapterItem for CustomPortfolioCardAdapter
+ */
 public class PortfolioCardAdapterItem extends AppCompatActivity {
 
     String percentChange;
@@ -32,6 +35,7 @@ public class PortfolioCardAdapterItem extends AppCompatActivity {
         this.id = id;
     }
 
+    // NOT operation for deletemode
     public boolean switchDeleteMode() {
         deleteMode = ! deleteMode;
         return getDeleteMode();
@@ -63,7 +67,6 @@ public class PortfolioCardAdapterItem extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d("Am i hit", "yes");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_portfolio_card_adapter_item);
 

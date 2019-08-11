@@ -423,7 +423,11 @@ public class PortfolioDetailActivity extends AppCompatActivity implements AsyncT
 
     }
 
-
+    /**
+     * Started by the API manager. Combines all data from that process into an ArrayList
+     * and draws it.
+     * @param result
+     */
     @Override
     public void OnComplete(ArrayList<PointF> result) {
         newPoints = pointsManager.combinePoints(result, points);
@@ -439,6 +443,10 @@ public class PortfolioDetailActivity extends AppCompatActivity implements AsyncT
         }
     }
 
+    /**
+     * Starts process for drawing a graph
+     * @param timeframe, 1d, 1mm, etc.
+     */
     private void drawGraph(String timeframe) {
         graphViewContainer.removeAllViews();
         points.removeAll(points);

@@ -5,6 +5,9 @@ import androidx.room.TypeConverter;
 import org.threeten.bp.OffsetDateTime;
 import org.threeten.bp.format.DateTimeFormatter;
 
+/**
+ * Used to convert between time formats for SQLite, which doesn't support timezones.
+ */
 public class TiviTypeConverters {
     private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME;
 

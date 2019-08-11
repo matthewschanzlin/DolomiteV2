@@ -13,6 +13,9 @@ import com.example.dolomitev2.R;
 
 import java.util.ArrayList;
 
+/**
+ * Adapter for stocks associated with a portfolio
+ */
 public class CustomStockAdapter extends BaseAdapter {
 
     public CustomStockAdapter(Context context, ArrayList<StockAdapterItem> stocks) {

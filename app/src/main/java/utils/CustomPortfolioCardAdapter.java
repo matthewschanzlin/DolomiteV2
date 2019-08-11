@@ -15,6 +15,9 @@ import com.example.dolomitev2.R;
 
 import java.util.ArrayList;
 
+/**
+ * Adapter for cards in PortfoliosActivitys
+ */
 public class CustomPortfolioCardAdapter extends BaseAdapter {
 
     Context context;
@@ -33,6 +36,9 @@ public class CustomPortfolioCardAdapter extends BaseAdapter {
         return portfolios.size();
     }
 
+    /**
+     * Changes into and out of editmode, and changes editmode for each adapter item
+     */
     public void switchEditMode() {
         editmode = ! editmode;
         if (! editmode){
@@ -78,7 +84,7 @@ public class CustomPortfolioCardAdapter extends BaseAdapter {
         viewHolder.value.setText(portfolios.get(i).getValue());
         GraphView chartView = new GraphView(context, portfolios.get(i).getChart(), new ViewDimension((float)396.00, (float)171.0));
         viewHolder.chart.addView(chartView);
-        if (editmode && i!=0) {
+        if (editmode && i!=0) { // change background to show editmode
             if (portfolios.get(i).getDeleteMode()) {
                 viewHolder.background.setBackground(context.getDrawable(R.drawable.twilight_blue_gradient_selected));
             } else {
@@ -88,7 +94,7 @@ public class CustomPortfolioCardAdapter extends BaseAdapter {
         else {
             viewHolder.background.setBackground(context.getDrawable(R.drawable.twilight_blue_gradient));
         }
-
+        // green if the portfolio's gained value, red if it lost value
         if (((viewHolder.percentChange.getText()).toString().substring(0,1)).equals("+")) {
             viewHolder.percentChange.setTextColor(Color.GREEN);
         } else {

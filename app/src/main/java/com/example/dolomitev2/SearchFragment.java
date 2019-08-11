@@ -93,6 +93,9 @@ public class SearchFragment extends Fragment {
         return view;
     }
 
+    /**
+     * test data
+     */
     private void populateSearchedStocks() {
 
         // different implementation necessary after API integration
@@ -104,6 +107,10 @@ public class SearchFragment extends Fragment {
         searchedStocks.add(new stock_search_adapter_item("REBK", "Reebok", "$42.69", "+1.5%"));
     }
 
+    /**
+     * pulls the keyboard down when necessary
+     * @param view
+     */
     private void hideKeyboard(View view) {
         InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);

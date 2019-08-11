@@ -1,5 +1,8 @@
 package utils;
 
+/**
+ * Stores float dimensions relating to screen size / graph size
+ */
 public class ViewDimension {
     Float width;
     Float height;

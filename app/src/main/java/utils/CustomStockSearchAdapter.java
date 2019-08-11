@@ -20,7 +20,9 @@ import com.example.dolomitev2.R;
 
 import java.util.ArrayList;
 
-
+/**
+ * Adapter for stock items that have been searched for.
+ */
 public class CustomStockSearchAdapter extends BaseAdapter {
     Context context;
     ArrayList<stock_search_adapter_item> stocks;
@@ -29,8 +31,6 @@ public class CustomStockSearchAdapter extends BaseAdapter {
         this.context = context;
         this.stocks = stocks;
     }
-
-
 
     @Override
     public int getCount() {

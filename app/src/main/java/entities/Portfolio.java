@@ -5,6 +5,9 @@ import androidx.room.PrimaryKey;
 
 @Entity
 
+/**
+ * One user-generated portfolio.
+ */
 public class Portfolio {
 
     @PrimaryKey(autoGenerate = true)
