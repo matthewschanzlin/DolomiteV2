@@ -158,7 +158,8 @@ public class SearchFragment extends Fragment implements AsyncTaskComplete {
             }
             it.remove(); // avoids a ConcurrentModificationException
         }
-
+        ((PortfolioDetailActivity)getContext()).removeNumStocks(searchedCustomStockAdapter.getPreviewCounter());
+        searchedCustomStockAdapter.resetPreviewCounter();
         searchedCustomStockAdapter.notifyDataSetChanged();
     }
 

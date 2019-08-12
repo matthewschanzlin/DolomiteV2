@@ -263,6 +263,7 @@ public class PortfolioDetailActivity extends AppCompatActivity implements AsyncT
 
 
             if (searchFragment != null) {
+                removeNumStocks(((SearchFragment)searchFragment).searchedCustomStockAdapter.getPreviewCounter());
                 Animation animation = AnimationUtils.loadAnimation(searchFragment.getActivity(), R.anim.slide_down_stock);
                 animation.setDuration(getResources().getInteger(android.R.integer.config_longAnimTime));
 
@@ -509,6 +510,21 @@ public class PortfolioDetailActivity extends AppCompatActivity implements AsyncT
      */
     public void removeStock(StockAdapterItem newStock) {
         stocks.remove(newStock);
+        customStockAdapter.notifyDataSetChanged();
+        drawGraph(selectedTimeFrame);
+    }
+
+    /**
+     * Removes a certain number of stocks from the end of the adapter
+     */
+    public void removeNumStocks(int numStocks) {
+        if (numStocks > stocks.size()) {
+            Log.d("debugging","removeNumStocks: param > stocks.size()");
+            return;
+        }
+        for (int i = numStocks; i > 0; i--) {
+            stocks.remove(stocks.size()-1);
+        }
         customStockAdapter.notifyDataSetChanged();
         drawGraph(selectedTimeFrame);
     }

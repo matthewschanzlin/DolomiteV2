@@ -37,11 +37,21 @@ public class CustomStockSearchAdapter extends BaseAdapter {
     Context context;
     private  Context mContext;
     ArrayList<stock_search_adapter_item> stocks;
+    int previewCounter; // Number of stocks previewed but not added
 
     public CustomStockSearchAdapter(Context context, ArrayList<stock_search_adapter_item> stocks) {
         this.context = context;
         this.mContext = context;
         this.stocks = stocks;
+        previewCounter = 0;
+    }
+
+    public int getPreviewCounter() {
+        return previewCounter;
+    }
+
+    public void resetPreviewCounter() {
+        previewCounter = 0;
     }
 
     @Override
@@ -92,6 +102,9 @@ public class CustomStockSearchAdapter extends BaseAdapter {
                         if (! viewHolder.viewClicked) {
                             ((PortfolioDetailActivity) mContext).addStock(stockToView);
                         }
+                        else {
+                            previewCounter--;
+                        }
                         ((PortfolioDetailActivity) mContext).addStockToDb(stockToView);
                     }
                     viewHolder.viewPortfolioAffectButton.setText("Stock Added!");
@@ -115,12 +128,14 @@ public class CustomStockSearchAdapter extends BaseAdapter {
                         }
                         viewHolder.viewPortfolioAffectButton.setText("Viewing With");
                         viewHolder.viewClicked = true;
+                        previewCounter++;
                     } else {
                         if (mContext instanceof PortfolioDetailActivity) {
                             ((PortfolioDetailActivity)mContext).removeStock(stockToView);
                             viewHolder.viewPortfolioAffectButton.setText("Viewing Without");
                         }
                         viewHolder.viewClicked = false;
+                        previewCounter--;
                     }
 
 
