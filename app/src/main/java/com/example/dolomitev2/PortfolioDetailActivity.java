@@ -506,6 +506,7 @@ public class PortfolioDetailActivity extends AppCompatActivity implements AsyncT
         Stock dbStock = new Stock(portfolioId, OffsetDateTime.now(), newStock.getTicker());
         dao.insertStock(dbStock);
         newStock.setStockId(dbStock.stock_id);
+        dao.setStockPriceByStockId(dbStock.stock_id, newStock.getValue());
     }
 
     /**
