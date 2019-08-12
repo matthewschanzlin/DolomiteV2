@@ -113,7 +113,6 @@ public class PortfolioDetailActivity extends AppCompatActivity implements AsyncT
 
         //Populate Stocks
         populateStocks();
-        drawGraph("1d");
 
         //Set Custom Adapter
         setAdapter();
@@ -238,13 +237,13 @@ public class PortfolioDetailActivity extends AppCompatActivity implements AsyncT
      * This method populates our PortfolioDetail with the stocks for a given portfolio.
      */
     private void populateStocks() {
-        stocks.add(new StockAdapterItem("AAPL", "Apple", (float)208.42, (float)2.4, -1));
         Stock[] loadedStocks = dao.loadStockByPortfolioId(portfolioId);
         for (int i = 0; i<loadedStocks.length; i++) {
             if (loadedStocks[i].sold_datetime == null && loadedStocks[i].portfolio_id == portfolioId) {
                 stocks.add(new StockAdapterItem(loadedStocks[i].ticker, "TEST", (float) 15, (float) 1, loadedStocks[i].stock_id));
             }
         }
+        drawGraph("1d");
     }
 
     /**

@@ -47,6 +47,7 @@ public class ApiManager {
      * @param ticker
      */
     public void getHistoricalStockData(final String timeframe, final String ticker) {
+        Log.d("yee", "yeeet4");
         dataPoints.removeAll(dataPoints);
         final String url = "https://cloud.iexapis.com/stable/stock/" + ticker + "/chart/" + timeframe + "?token=pk_ef064cdb978c441586aec2daa723c376";
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
@@ -56,19 +57,20 @@ public class ApiManager {
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
+
                         try{
-                            for(int i=0; i < response.length(); i++){
+                            for(int i=0; i < response.length(); i++) {
                                 JSONObject stockPrice = response.getJSONObject(i);
                                 float price;
-                                if (timeframe.equals("1d")) {
-                                    price = (float)stockPrice.getDouble("marketClose");
-                                }else {
-                                    price = (float)stockPrice.getDouble("uClose");
+
+                                if (stockPrice.getString("close") != "null") {
+                                    price = (float)stockPrice.getDouble("close");
+                                    dataPoints.add(new PointF(i, price));
+                                    Log.d("POINT", new Integer(i).toString() +" , "+new Float(price).toString());
                                 }
-                                dataPoints.add(new PointF(i, price));
                             }
                         }catch (JSONException e){
-                            e.printStackTrace();
+                            Log.d("error", "error");
                         }
                         String s = new Integer(dataPoints.size()).toString();
                         listener.OnPointsComplete(dataPoints);
