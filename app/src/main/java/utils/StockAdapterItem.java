@@ -49,4 +49,8 @@ public class StockAdapterItem extends AppCompatActivity {
     public int getStockId() {
         return stockId;
     }
+
+    public void setStockId(int stockId) {
+        this.stockId = stockId;
+    }
 }

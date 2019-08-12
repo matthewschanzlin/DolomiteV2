@@ -33,6 +33,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.threeten.bp.OffsetDateTime;
+
 import java.util.ArrayList;
 
 import entities.AdminDAO;
@@ -486,6 +488,9 @@ public class PortfolioDetailActivity extends AppCompatActivity implements AsyncT
 
     public void addStock(StockAdapterItem newStock) {
         stocks.add(newStock);
+        Stock dbStock = new Stock(portfolioId, OffsetDateTime.now(), newStock.getTicker());
+        dao.insertStock(dbStock);
+        newStock.setStockId(dbStock.stock_id);
         customStockAdapter.notifyDataSetChanged();
         drawGraph(selectedTimeFrame);
     }

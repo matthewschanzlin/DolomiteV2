@@ -17,12 +17,17 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.room.Room;
+
 import com.daimajia.swipe.SwipeLayout;
 import com.example.dolomitev2.PortfolioDetailActivity;
 import com.example.dolomitev2.PortfoliosActivity;
 import com.example.dolomitev2.R;
 
 import java.util.ArrayList;
+
+import entities.AdminDAO;
+import entities.AppDatabase;
 
 /**
  * Adapter for stock items that have been searched for.
@@ -76,7 +81,6 @@ public class CustomStockSearchAdapter extends BaseAdapter {
             viewHolder.addStockButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
                     StockAdapterItem stockToView = new StockAdapterItem(
                             stocks.get(viewHolder.currentPos).getTicker(),
                             stocks.get(viewHolder.currentPos).getCompanyName(),

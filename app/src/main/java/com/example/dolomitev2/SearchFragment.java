@@ -112,6 +112,7 @@ public class SearchFragment extends Fragment implements AsyncTaskComplete {
     }
 
     private void search(String searchTerm) {
+        searchedStocks.removeAll(searchedStocks);
         manager.getSearchResults(searchTerm);
     }
 
@@ -152,7 +153,9 @@ public class SearchFragment extends Fragment implements AsyncTaskComplete {
         Iterator it = mp.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry)it.next();
-            searchedStocks.add(new stock_search_adapter_item(pair.getKey().toString(), "Company", new Float(pair.getValue().toString()), (float)2.4));
+            if (new Float(pair.getValue().toString()) > 0.1) {
+                searchedStocks.add(new stock_search_adapter_item(pair.getKey().toString(), "Company", new Float(pair.getValue().toString()), (float) 2.4));
+            }
             it.remove(); // avoids a ConcurrentModificationException
         }
 
