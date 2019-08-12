@@ -30,6 +30,9 @@ public interface AdminDAO {
     @Query("select * from Stock where stock_id = :stock_id")
     public Stock loadStockByStockId(int stock_id);
 
+    @Query("update Stock set stock_price = :stockPrice where stock_id = :stockId")
+    public void setStockPriceByStockId(int stockId, float stockPrice);
+
     @Delete
     public void deletePortfolio(Portfolio portfolio);
 

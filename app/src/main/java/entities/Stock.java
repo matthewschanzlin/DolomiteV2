@@ -22,6 +22,9 @@ public class Stock {
 
     public int portfolio_id;
 
+    @Nullable
+    public float stock_price;
+
     public OffsetDateTime bought_datetime;
 
     public Stock(int portfolio_id, OffsetDateTime bought_datetime, String ticker) {

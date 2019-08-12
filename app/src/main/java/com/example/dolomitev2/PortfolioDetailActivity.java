@@ -240,7 +240,7 @@ public class PortfolioDetailActivity extends AppCompatActivity implements AsyncT
         Stock[] loadedStocks = dao.loadStockByPortfolioId(portfolioId);
         for (int i = 0; i<loadedStocks.length; i++) {
             if (loadedStocks[i].sold_datetime == null && loadedStocks[i].portfolio_id == portfolioId) {
-                stocks.add(new StockAdapterItem(loadedStocks[i].ticker, "TEST", (float) 15, (float) 1, loadedStocks[i].stock_id));
+                stocks.add(new StockAdapterItem(loadedStocks[i].ticker, "TEST", loadedStocks[i].stock_price, (float) 1, loadedStocks[i].stock_id));
             }
         }
         drawGraph("1d");
@@ -291,8 +291,7 @@ public class PortfolioDetailActivity extends AppCompatActivity implements AsyncT
             }
 
         } else {
-            Intent intent = new Intent(PortfolioDetailActivity.this, PortfoliosActivity.class);
-            startActivity(intent);
+            finish();
         }
     }
 
@@ -504,8 +503,10 @@ public class PortfolioDetailActivity extends AppCompatActivity implements AsyncT
     public void addStockToDb(StockAdapterItem newStock) {
         Log.d("debugging","add stock called");
         Stock dbStock = new Stock(portfolioId, OffsetDateTime.now(), newStock.getTicker());
+        dbStock.stock_price = newStock.getValue();
         dao.insertStock(dbStock);
         newStock.setStockId(dbStock.stock_id);
+        dao.setStockPriceByStockId(dbStock.stock_id, (float)newStock.getValue());
     }
 
     /**
