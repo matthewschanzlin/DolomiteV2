@@ -518,7 +518,12 @@ public class PortfolioDetailActivity extends AppCompatActivity implements AsyncT
      */
     public void removeStockFromDb(int stockId) {
         if (stockId != -1) {
-            dao.deleteStock(dao.loadStockByStockId(stockId));
+            try {
+                dao.deleteStock(dao.loadStockByStockId(stockId));
+            }
+            catch (NullPointerException e) {
+                e.printStackTrace();
+            }
         }
     }
 

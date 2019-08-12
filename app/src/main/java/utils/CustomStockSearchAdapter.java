@@ -37,13 +37,11 @@ public class CustomStockSearchAdapter extends BaseAdapter {
     Context context;
     private  Context mContext;
     ArrayList<stock_search_adapter_item> stocks;
-    boolean viewClicked;
 
     public CustomStockSearchAdapter(Context context, ArrayList<stock_search_adapter_item> stocks) {
         this.context = context;
         this.mContext = context;
         this.stocks = stocks;
-        viewClicked = false;
     }
 
     @Override
@@ -78,6 +76,7 @@ public class CustomStockSearchAdapter extends BaseAdapter {
             viewHolder.addStockButton = view.findViewById(R.id.AddStockSearchButton);
             viewHolder.viewPortfolioAffectButton = view.findViewById(R.id.ViewPortfolioButton);
             viewHolder.currentPos = i;
+            viewHolder.viewClicked = false;
 
             viewHolder.addStockButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -90,7 +89,9 @@ public class CustomStockSearchAdapter extends BaseAdapter {
                             -1);
 
                     if (mContext instanceof PortfolioDetailActivity) {
-                        ((PortfolioDetailActivity) mContext).addStock(stockToView);
+                        if (! viewHolder.viewClicked) {
+                            ((PortfolioDetailActivity) mContext).addStock(stockToView);
+                        }
                         ((PortfolioDetailActivity) mContext).addStockToDb(stockToView);
                     }
                     viewHolder.viewPortfolioAffectButton.setText("Stock Added!");
@@ -108,18 +109,18 @@ public class CustomStockSearchAdapter extends BaseAdapter {
                             stocks.get(viewHolder.currentPos).getUpDown(),
                             -1);
 
-                    if (!viewClicked) {
+                    if (! viewHolder.viewClicked) {
                         if (mContext instanceof PortfolioDetailActivity) {
                             ((PortfolioDetailActivity) mContext).addStock(stockToView);
                         }
                         viewHolder.viewPortfolioAffectButton.setText("Viewing With");
-                        viewClicked = true;
+                        viewHolder.viewClicked = true;
                     } else {
                         if (mContext instanceof PortfolioDetailActivity) {
                             ((PortfolioDetailActivity)mContext).removeStock(stockToView);
                             viewHolder.viewPortfolioAffectButton.setText("Viewing Without");
                         }
-                        viewClicked = false;
+                        viewHolder.viewClicked = false;
                     }
 
 
@@ -161,6 +162,6 @@ public class CustomStockSearchAdapter extends BaseAdapter {
         SwipeLayout swipeLayout;
         Button addStockButton, viewPortfolioAffectButton;
         int currentPos;
-
+        boolean viewClicked;
     }
 }
