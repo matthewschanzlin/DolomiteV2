@@ -192,6 +192,10 @@ public class PortfoliosActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        // Do Nothing when in Home
+        if (inEditMode) {
+            switchEditMode();
+        } else {
+            super.onBackPressed();
+        }
     }
 }
