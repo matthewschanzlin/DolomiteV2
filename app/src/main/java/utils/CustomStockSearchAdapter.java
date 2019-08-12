@@ -2,6 +2,7 @@ package utils;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -14,8 +15,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.daimajia.swipe.SwipeLayout;
+import com.example.dolomitev2.PortfolioDetailActivity;
+import com.example.dolomitev2.PortfoliosActivity;
 import com.example.dolomitev2.R;
 
 import java.util.ArrayList;
@@ -25,11 +29,15 @@ import java.util.ArrayList;
  */
 public class CustomStockSearchAdapter extends BaseAdapter {
     Context context;
+    private  Context mContext;
     ArrayList<stock_search_adapter_item> stocks;
+    boolean viewClicked;
 
     public CustomStockSearchAdapter(Context context, ArrayList<stock_search_adapter_item> stocks) {
         this.context = context;
+        this.mContext = context;
         this.stocks = stocks;
+        viewClicked = false;
     }
 
     @Override
@@ -75,6 +83,30 @@ public class CustomStockSearchAdapter extends BaseAdapter {
             viewHolder.viewPortfolioAffectButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
+                    StockAdapterItem stockToView = new StockAdapterItem(
+                            stocks.get(viewHolder.currentPos).getTicker(),
+                            stocks.get(viewHolder.currentPos).getCompanyName(),
+                            stocks.get(viewHolder.currentPos).getValue(),
+                            stocks.get(viewHolder.currentPos).getUpDown(),
+                            -1);
+
+                    if (!viewClicked) {
+                        if (mContext instanceof PortfolioDetailActivity) {
+                            ((PortfolioDetailActivity) mContext).addStock(stockToView);
+                        }
+                        viewHolder.viewPortfolioAffectButton.setText("Viewing With");
+                        viewClicked = true;
+                    } else {
+                        if (mContext instanceof PortfolioDetailActivity) {
+                            ((PortfolioDetailActivity)mContext).removeStock(stockToView);
+                            viewHolder.viewPortfolioAffectButton.setText("Viewing Without");
+                        }
+                        viewClicked = false;
+                    }
+
+
+
 
                 }
             });

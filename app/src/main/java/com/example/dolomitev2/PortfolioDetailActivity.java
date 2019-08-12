@@ -236,7 +236,7 @@ public class PortfolioDetailActivity extends AppCompatActivity implements AsyncT
      * This method populates our PortfolioDetail with the stocks for a given portfolio.
      */
     private void populateStocks() {
-        //stocks.add(new StockAdapterItem("AAPL", "Apple", (float)208.42, (float)2.4, -1));
+        stocks.add(new StockAdapterItem("AAPL", "Apple", (float)208.42, (float)2.4, -1));
         Stock[] loadedStocks = dao.loadStockByPortfolioId(portfolioId);
         for (int i = 0; i<loadedStocks.length; i++) {
             if (loadedStocks[i].sold_datetime == null) {
@@ -483,4 +483,18 @@ public class PortfolioDetailActivity extends AppCompatActivity implements AsyncT
         counter = 0;
         manager.getHistoricalPortfolioData(timeframe, stocks);
     }
+
+    public void addStock(StockAdapterItem newStock) {
+        stocks.add(newStock);
+        customStockAdapter.notifyDataSetChanged();
+        drawGraph(selectedTimeFrame);
+    }
+
+    public void removeStock(StockAdapterItem newStock) {
+        stocks.remove(newStock);
+        customStockAdapter.notifyDataSetChanged();
+        drawGraph(selectedTimeFrame);
+    }
+
+
 }
