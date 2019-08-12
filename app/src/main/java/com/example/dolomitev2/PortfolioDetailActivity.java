@@ -241,7 +241,7 @@ public class PortfolioDetailActivity extends AppCompatActivity implements AsyncT
         stocks.add(new StockAdapterItem("AAPL", "Apple", (float)208.42, (float)2.4, -1));
         Stock[] loadedStocks = dao.loadStockByPortfolioId(portfolioId);
         for (int i = 0; i<loadedStocks.length; i++) {
-            if (loadedStocks[i].sold_datetime == null) {
+            if (loadedStocks[i].sold_datetime == null && loadedStocks[i].portfolio_id == portfolioId) {
                 stocks.add(new StockAdapterItem(loadedStocks[i].ticker, "TEST", (float) 15, (float) 1, loadedStocks[i].stock_id));
             }
         }
@@ -452,6 +452,9 @@ public class PortfolioDetailActivity extends AppCompatActivity implements AsyncT
      */
     @Override
     public void OnPointsComplete(ArrayList<PointF> result) {
+        if (result.size() > 0) {
+            Log.d("debugging", "last pointF: " + result.get(result.size() - 1));
+        }
         newPoints = pointsManager.combinePoints(result, points);
         points.removeAll(points);
         for (PointF point : newPoints) {
@@ -500,6 +503,7 @@ public class PortfolioDetailActivity extends AppCompatActivity implements AsyncT
      * Adds new stock to database
      */
     public void addStockToDb(StockAdapterItem newStock) {
+        Log.d("debugging","add stock called");
         Stock dbStock = new Stock(portfolioId, OffsetDateTime.now(), newStock.getTicker());
         dao.insertStock(dbStock);
         newStock.setStockId(dbStock.stock_id);
