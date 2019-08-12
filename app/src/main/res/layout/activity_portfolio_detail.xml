@@ -197,42 +197,42 @@
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="0.33"
                 android:textColor="@color/lightLilac"
-                android:text="Open" />
+                android:text="Open: ∞" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="0.33"
                 android:textColor="@color/lightLilac"
-                android:text="Daily high" />
+                android:text="Daily High: ∞" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="0.33"
                 android:textColor="@color/lightLilac"
-                android:text="Daily low" />
+                android:text="Daily Low: ∞" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="0.33"
                 android:textColor="@color/lightLilac"
-                android:text="52w high" />
+                android:text="52w High: ∞" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="0.33"
                 android:textColor="@color/lightLilac"
-                android:text="52w low" />
+                android:text="52w Low: ∞" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="0.33"
                 android:textColor="@color/lightLilac"
-                android:text="Market cap: " />
+                android:text="Market Cap: ∞" />
         </GridLayout>
 
     </LinearLayout>
