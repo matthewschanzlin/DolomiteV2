@@ -53,4 +53,13 @@ public class StockAdapterItem extends AppCompatActivity {
     public void setStockId(int stockId) {
         this.stockId = stockId;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (! (obj instanceof StockAdapterItem)) {
+            return false;
+        }
+        return ticker.equals(((StockAdapterItem) obj).getTicker())
+                && stockId == ((StockAdapterItem) obj).getStockId();
+    }
 }
