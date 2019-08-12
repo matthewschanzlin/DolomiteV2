@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.dolomitev2.R;
+
 import java.util.ArrayList;
 
 /**
@@ -50,10 +52,11 @@ public class GraphView extends View {
             }
 
             double multiplierX = dimension.width / points.size();
-            double multiplierY = (dimension.height - 25) / (topY  - botY);
+
+            double multiplierY = (dimension.height - (dimension.height/10)) / (topY  - botY);
 
             for (PointF p: points) {
-                linePoints.add(new PointF((float)(p.x * multiplierX), (float)(((topY - p.y) * multiplierY) + 25)));
+                linePoints.add(new PointF((float)(p.x * multiplierX), (float)(((topY - p.y) * multiplierY) + dimension.height/10)));
             }
         }
 
@@ -82,9 +85,10 @@ public class GraphView extends View {
         // TODO Auto-generated method stub
         super.onDraw(canvas);
         path = new Path();
-        paint.setColor(Color.WHITE);
-        paint.setStrokeWidth(2);
-        for (int i = 0; i < linePoints.size(); i++) {
+        paint.setColor(context.getResources().getColor(R.color.lightLilac));
+        paint.setStrokeWidth(5);
+        path.moveTo(linePoints.get(0).x, linePoints.get(0).y);
+        for (int i = 1; i < linePoints.size(); i++) {
             path.lineTo(linePoints.get(i).x, linePoints.get(i).y);
         }
         canvas.drawPath(path, paint);
