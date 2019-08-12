@@ -90,6 +90,7 @@ public class CustomStockSearchAdapter extends BaseAdapter {
 
                     if (mContext instanceof PortfolioDetailActivity) {
                         ((PortfolioDetailActivity) mContext).addStock(stockToView);
+                        ((PortfolioDetailActivity) mContext).addStockToDb(stockToView);
                     }
                     viewHolder.viewPortfolioAffectButton.setText("Stock Added!");
                 }

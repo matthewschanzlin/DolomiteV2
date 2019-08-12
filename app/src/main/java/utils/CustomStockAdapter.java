@@ -11,17 +11,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.room.Room;
-
 import com.daimajia.swipe.SimpleSwipeListener;
 import com.daimajia.swipe.SwipeLayout;
 import com.example.dolomitev2.PortfolioDetailActivity;
 import com.example.dolomitev2.R;
 
 import java.util.ArrayList;
-
-import entities.AdminDAO;
-import entities.AppDatabase;
 
 /**
  * Adapter for stocks associated with a portfolio
@@ -37,9 +32,6 @@ public class CustomStockAdapter extends BaseAdapter {
     Context context;
     ArrayList<StockAdapterItem> stocks;
     int portfolioId;
-
-    AppDatabase db;
-    AdminDAO dao;
 
     @Override
     public int getCount() {
@@ -78,15 +70,8 @@ public class CustomStockAdapter extends BaseAdapter {
                 @Override
                 public void onClick(View view) {
                     stocks.remove(viewHolder.currentPos);
-                    // Init database
-                    if (db == null) {
-                        db = Room.databaseBuilder(context,
-                                AppDatabase.class, "database-name").fallbackToDestructiveMigration().allowMainThreadQueries().build();
-                        // NOTE: MIGHT LOCK UP THREAD. SWITCH TO STATIC NESTED CLASS WHEN POSSIBLE
-                        dao = db.userDao();
-                    }
-                    if (viewHolder.stockId != -1) {
-                        dao.deleteStock(dao.loadStockByStockId(viewHolder.stockId));
+                    if (context instanceof PortfolioDetailActivity) {
+                        ((PortfolioDetailActivity) context).removeStockFromDb(viewHolder.stockId);
                     }
                     notifyDataSetChanged();
                 }

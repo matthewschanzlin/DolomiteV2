@@ -486,19 +486,40 @@ public class PortfolioDetailActivity extends AppCompatActivity implements AsyncT
         manager.getHistoricalPortfolioData(timeframe, stocks);
     }
 
+    /**
+     * Adds new stock to adapter, then redraws graph
+     */
     public void addStock(StockAdapterItem newStock) {
         stocks.add(newStock);
-        Stock dbStock = new Stock(portfolioId, OffsetDateTime.now(), newStock.getTicker());
-        dao.insertStock(dbStock);
-        newStock.setStockId(dbStock.stock_id);
         customStockAdapter.notifyDataSetChanged();
         drawGraph(selectedTimeFrame);
     }
 
+    /**
+     * Adds new stock to database
+     */
+    public void addStockToDb(StockAdapterItem newStock) {
+        Stock dbStock = new Stock(portfolioId, OffsetDateTime.now(), newStock.getTicker());
+        dao.insertStock(dbStock);
+        newStock.setStockId(dbStock.stock_id);
+    }
+
+    /**
+     * Removes stock from adapter, then redraws graph
+     */
     public void removeStock(StockAdapterItem newStock) {
         stocks.remove(newStock);
         customStockAdapter.notifyDataSetChanged();
         drawGraph(selectedTimeFrame);
+    }
+
+    /**
+     * Removes stock from database (based on stockId, the primary key)
+     */
+    public void removeStockFromDb(int stockId) {
+        if (stockId != -1) {
+            dao.deleteStock(dao.loadStockByStockId(stockId));
+        }
     }
 
 
