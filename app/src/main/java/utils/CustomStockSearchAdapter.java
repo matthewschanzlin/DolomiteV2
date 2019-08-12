@@ -77,6 +77,17 @@ public class CustomStockSearchAdapter extends BaseAdapter {
                 @Override
                 public void onClick(View view) {
 
+                    StockAdapterItem stockToView = new StockAdapterItem(
+                            stocks.get(viewHolder.currentPos).getTicker(),
+                            stocks.get(viewHolder.currentPos).getCompanyName(),
+                            stocks.get(viewHolder.currentPos).getValue(),
+                            stocks.get(viewHolder.currentPos).getUpDown(),
+                            -1);
+
+                    if (mContext instanceof PortfolioDetailActivity) {
+                        ((PortfolioDetailActivity) mContext).addStock(stockToView);
+                    }
+                    viewHolder.viewPortfolioAffectButton.setText("Stock Added!");
                 }
             });
 
