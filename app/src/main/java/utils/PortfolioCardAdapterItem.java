@@ -65,6 +65,10 @@ public class PortfolioCardAdapterItem extends AppCompatActivity {
         return chart;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

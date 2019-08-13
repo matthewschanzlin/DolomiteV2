@@ -35,6 +35,7 @@ public class PortfoliosActivity extends AppCompatActivity {
     boolean inEditMode;
     AppDatabase db;
     AdminDAO dao;
+    int indexStarted;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +87,7 @@ public class PortfoliosActivity extends AppCompatActivity {
         populatePortfolios();
         adapter = new CustomPortfolioCardAdapter(this, portfolios);
         portfoliosGrid.setAdapter(adapter);
-
+        indexStarted = 0;
 
 
 
@@ -139,13 +140,14 @@ public class PortfoliosActivity extends AppCompatActivity {
                     else {
                         // add new portfolio
                         String untitledPortfolioName = "Untitled";
-                        dao.insertPortfolio(new Portfolio(untitledPortfolioName));
+                        Portfolio dbPortfolio = new Portfolio(untitledPortfolioName);
+                        dao.insertPortfolio(dbPortfolio);
                         // get auto-gen id of portfolio just inserted (for cardAdapterItem constructor)
-                        Portfolio[] tempAllPortfolios = dao.loadAllPortfolios();
                         PortfolioCardAdapterItem untitledCard =
                                 new PortfolioCardAdapterItem("-2.6%", "4600", untitledPortfolioName,
-                                        getPoints(), tempAllPortfolios[tempAllPortfolios.length-1].portfolio_id);
+                                        getPoints(), dbPortfolio.portfolio_id);
                         portfolios.add(untitledCard);
+                        indexStarted = portfolios.size()-1;
                         adapter.notifyDataSetChanged();
                         Intent intent = new Intent(PortfoliosActivity.this, PortfolioDetailActivity.class);
                         intent.putExtra("Portfolio name", untitledPortfolioName);
@@ -160,6 +162,7 @@ public class PortfoliosActivity extends AppCompatActivity {
                     return;
                 }
                 // Start single portfolio activity
+                indexStarted = i;
                 Intent intent = new Intent(PortfoliosActivity.this, PortfolioDetailActivity.class);
                 intent.putExtra("Portfolio name", portfolios.get(i).getName());
                 intent.putExtra("Portfolio id", portfolios.get(i).getId());
@@ -197,5 +200,16 @@ public class PortfoliosActivity extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.d("debugging", "onRestart");
+        if (indexStarted > 0 && indexStarted < portfolios.size()) {
+            portfolios.get(indexStarted).setName(dao.loadPortfolioByPortfolioId(portfolios.get(indexStarted).getId()).portfolio_name);
+        }
+        indexStarted = 0;
+        adapter.notifyDataSetChanged();
     }
 }

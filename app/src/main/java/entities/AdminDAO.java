@@ -40,5 +40,5 @@ public interface AdminDAO {
     public void deleteStock(Stock stock);
 
     @Query(" update Portfolio set portfolio_name = :name where portfolio_id = :portfolio_id")
-    public int renamePortfolio(int portfolio_id, String name);
+    public void renamePortfolio(int portfolio_id, String name);
 }
