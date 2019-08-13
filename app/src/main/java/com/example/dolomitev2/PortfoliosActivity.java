@@ -147,7 +147,7 @@ public class PortfoliosActivity extends AppCompatActivity {
                                 new PortfolioCardAdapterItem("-2.6%", "4600", untitledPortfolioName,
                                         getPoints(), dbPortfolio.portfolio_id);
                         portfolios.add(untitledCard);
-                        indexStarted = portfolios.size()-1;
+                        //indexStarted = portfolios.indexOf(untitledCard);
                         adapter.notifyDataSetChanged();
                         Intent intent = new Intent(PortfoliosActivity.this, PortfolioDetailActivity.class);
                         intent.putExtra("Portfolio name", untitledPortfolioName);
@@ -207,7 +207,13 @@ public class PortfoliosActivity extends AppCompatActivity {
         super.onRestart();
         Log.d("debugging", "onRestart");
         if (indexStarted > 0 && indexStarted < portfolios.size()) {
-            portfolios.get(indexStarted).setName(dao.loadPortfolioByPortfolioId(portfolios.get(indexStarted).getId()).portfolio_name);
+            PortfolioCardAdapterItem p = portfolios.get(indexStarted);
+            Portfolio dbp = dao.loadPortfolioByPortfolioId(p.getId());
+            if (dbp == null) {
+                Log.d("debugging","null dbp");
+                return;
+            }
+            p.setName(dbp.portfolio_name);
         }
         indexStarted = 0;
         adapter.notifyDataSetChanged();
